@@ -3,408 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SG Esports - Ultimate Tournament Hub</title>
-    <!-- FontAwesome & Google Fonts -->
+    <title>SG Esports - Cyberpunk Ultra Pro Hub</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #ff003c;
-            --primary-glow: rgba(255, 0, 60, 0.4);
-            --secondary: #ffb700;
-            --bg-dark: #050811;
-            --card-bg: #0e1626;
-            --accent: #00f0ff;
-            --success: #00ff66;
-            --text-muted: #8a99ad;
-            --border: #1e2d4a;
+            --neon-red: #ff0055;
+            --neon-cyan: #00f0ff;
+            --neon-gold: #ffb700;
+            --neon-green: #00ff66;
+            --bg-dark: #03050a;
+            --glass-bg: rgba(14, 22, 38, 0.65);
+            --glass-border: rgba(0, 240, 255, 0.25);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
-        body { background-color: var(--bg-dark); color: #ffffff; padding-bottom: 80px; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 80px; overflow-x: hidden; }
 
-        /* Top Header */
-        .app-header {
-            background: linear-gradient(180deg, #090e1a 0%, rgba(9,14,26,0.95) 100%);
+        /* LIVE ANIMATED CANVAS BACKGROUND */
+        #bgCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Glassmorphism Top Header */
+        .header {
+            background: rgba(3, 5, 10, 0.85);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--primary);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 25px rgba(255, 0, 60, 0.25);
+            border-bottom: 2px solid var(--neon-cyan);
+            position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
         }
         .brand { display: flex; align-items: center; gap: 10px; }
-        .brand-logo {
-            width: 42px;
-            height: 42px;
-            background: linear-gradient(135deg, var(--primary), #80001f);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Teko', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: #fff;
-            border: 1.5px solid rgba(255,255,255,0.2);
-            box-shadow: 0 0 15px var(--primary-glow);
+        .logo {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--neon-red), #55001a);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-red);
+            animation: pulseGlow 2s infinite alternate;
         }
-        .brand-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; line-height: 1; }
-        .brand-title span { color: var(--secondary); display: block; font-size: 11px; letter-spacing: 2px; }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px var(--neon-red); }
+            100% { box-shadow: 0 0 25px var(--neon-cyan); }
+        }
 
-        .wallet-badge {
-            background: #121c30;
-            border: 1px solid var(--secondary);
+        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; text-shadow: 0 0 10px var(--neon-cyan); }
+        
+        .wallet-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-gold);
             padding: 6px 14px;
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 13px;
+            color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(255, 183, 0, 0.3);
             cursor: pointer;
-            box-shadow: 0 0 10px rgba(255, 183, 0, 0.2);
-            transition: transform 0.2s;
-        }
-        .wallet-badge:active { transform: scale(0.95); }
-        .wallet-badge i { color: var(--secondary); font-size: 15px; }
-        .wallet-amount { font-weight: 800; color: var(--success); font-size: 16px; }
-
-        /* Navigation Filter Bar */
-        .filter-scroll {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding: 12px 16px;
-            background: #080d19;
-            scrollbar-width: none;
-            border-bottom: 1px solid var(--border);
-        }
-        .filter-scroll::-webkit-scrollbar { display: none; }
-        .filter-btn {
-            background: #10192b;
-            border: 1px solid var(--border);
-            color: var(--text-muted);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 800;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .filter-btn.active {
-            background: linear-gradient(45deg, var(--primary), #b3002a);
-            color: #fff;
-            border-color: var(--primary);
-            box-shadow: 0 0 12px var(--primary-glow);
         }
 
-        /* Views Container */
-        .tab-view { display: none; padding: 16px; animation: fadeIn 0.3s ease-in-out; }
+        /* Animated Banner Header */
+        .banner-box { padding: 14px 16px 0 16px; }
+        .banner-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--neon-red);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .banner-card h2 { font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--neon-gold); text-shadow: 0 0 8px var(--neon-gold); }
+
+        /* Category Filter Pills */
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; scrollbar-width: none; }
+        .categories::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            background: rgba(14, 22, 38, 0.8);
+            border: 1px solid var(--glass-border);
+            color: #8a99ad; padding: 8px 16px;
+            border-radius: 20px; font-weight: 800; font-size: 12px;
+            white-space: nowrap; cursor: pointer; transition: 0.3s;
+        }
+        .cat-btn.active {
+            background: linear-gradient(45deg, var(--neon-red), #aa0038);
+            color: #fff; border-color: var(--neon-red);
+            box-shadow: 0 0 12px var(--neon-red);
+        }
+
+        /* Tab Content Views */
+        .tab-view { display: none; padding: 0 16px 16px 16px; }
         .tab-view.active { display: block; }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Match Card - Premium Styling */
+        /* Match Card - Futuristic Neon Glass UI */
         .match-card {
-            background: var(--card-bg);
+            background: var(--glass-bg);
             border-radius: 16px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
+            margin-bottom: 18px;
+            border: 1px solid var(--glass-border);
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
             position: relative;
         }
-        .match-banner {
-            width: 100%;
-            height: 150px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
+        .match-header {
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .match-banner::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 20%, var(--card-bg) 100%);
-        }
-        .mode-badge {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: rgba(5, 8, 17, 0.85);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 6px;
-            z-index: 2;
-        }
-        .type-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--primary);
-            color: #fff;
-            font-size: 11px;
-            font-weight: 800;
-            padding: 4px 10px;
-            border-radius: 6px;
-            z-index: 2;
-        }
+        .match-title { font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 800; color: #fff; text-shadow: 0 0 8px #fff; }
+        .match-badge { background: var(--neon-red); font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 4px; box-shadow: 0 0 8px var(--neon-red); }
 
-        .match-info { padding: 15px; position: relative; z-index: 3; margin-top: -20px; }
-        .match-title { font-size: 19px; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 8px; }
-
+        .match-body { padding: 14px; }
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            background: #090f1c;
-            padding: 12px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 14px;
-            border: 1px solid var(--border);
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            background: rgba(0, 0, 0, 0.5); padding: 10px; border-radius: 10px;
+            text-align: center; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
         }
-        .stat-item span { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; display: block; }
-        .stat-item strong { font-size: 16px; color: #fff; font-weight: 800; margin-top: 2px; display: block; }
-        .stat-item strong.prize { color: var(--success); }
+        .stat-item span { font-size: 10px; color: #8a99ad; font-weight: 700; display: block; }
+        .stat-item strong { font-size: 15px; font-weight: 800; }
 
-        .slots-container { margin-bottom: 14px; }
-        .slots-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
-        .slots-bar { width: 100%; height: 8px; background: #090f1c; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
-        .slots-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); border-radius: 10px; transition: width 0.4s; }
+        .room-box {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px dashed var(--neon-cyan);
+            padding: 10px; border-radius: 8px; margin-bottom: 12px;
+            text-align: center; font-family: 'Orbitron', sans-serif;
+            font-size: 12px; font-weight: 800; color: var(--neon-cyan);
+            display: none; text-shadow: 0 0 10px var(--neon-cyan);
+        }
 
-        .btn-action {
+        .btn-neon {
             width: 100%;
-            background: linear-gradient(45deg, var(--primary), #b3002a);
-            color: #fff;
-            border: none;
-            padding: 14px;
-            border-radius: 10px;
-            font-weight: 900;
-            font-size: 15px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 4px 15px var(--primary-glow);
-            transition: all 0.2s;
+            background: linear-gradient(90deg, var(--neon-red), #b3003b);
+            color: #fff; border: none; padding: 12px; border-radius: 10px;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 13px;
+            cursor: pointer; box-shadow: 0 0 15px var(--neon-red);
+            text-transform: uppercase; transition: 0.2s;
         }
-        .btn-action:active { transform: scale(0.98); }
+        .btn-neon:active { transform: scale(0.98); }
 
         /* Modal Popup */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            backdrop-filter: blur(5px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px;
+            backdrop-filter: blur(8px);
         }
         .modal-content {
-            background: #0e1626;
-            width: 100%;
-            max-width: 420px;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.9);
-            position: relative;
+            background: #090e1a; width: 100%; max-width: 400px;
+            border-radius: 16px; padding: 18px; border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0,240,255,0.3);
         }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .modal-header h3 { color: var(--secondary); font-size: 18px; font-weight: 900; }
-        .close-btn { color: var(--text-muted); font-size: 22px; cursor: pointer; }
-
-        .seat-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            margin: 15px 0;
-            max-height: 220px;
-            overflow-y: auto;
-            padding: 5px;
-        }
+        .seat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 15px 0; max-height: 200px; overflow-y: auto; }
         .seat-box {
-            background: #141f36;
-            border: 1px solid var(--border);
-            padding: 10px 0;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            color: #fff;
-            transition: all 0.2s;
+            background: rgba(20, 31, 54, 0.8); border: 1px solid var(--glass-border);
+            padding: 8px 0; border-radius: 6px; text-align: center;
+            font-weight: 800; font-size: 12px; cursor: pointer;
         }
-        .seat-box.selected { background: var(--success); color: #000; border-color: var(--success); font-weight: 900; box-shadow: 0 0 10px var(--success); }
-        .seat-box.taken { background: #2a1118; color: #ff5252; border-color: #5c1822; cursor: not-allowed; opacity: 0.6; }
+        .seat-box.selected { background: var(--neon-green); color: #000; font-weight: 900; box-shadow: 0 0 10px var(--neon-green); }
+        .seat-box.taken { background: rgba(255, 0, 85, 0.2); color: var(--neon-red); cursor: not-allowed; border-color: var(--neon-red); }
 
-        /* Forms & Inputs */
-        .form-group { margin-bottom: 14px; text-align: left; }
-        .form-group label { display: block; font-size: 11px; color: var(--text-muted); font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
-        .form-group input { width: 100%; background: #080d19; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 700; outline: none; }
-        .form-group input:focus { border-color: var(--accent); }
-
-        /* Profile & Cards */
-        .profile-card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border); margin-bottom: 16px; }
-        .user-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
-        .avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 24px; color: #fff; font-weight: 900; border: 2px solid var(--secondary); }
-        .user-details h3 { font-size: 18px; font-weight: 900; color: #fff; }
-        .user-uid { font-size: 12px; color: var(--accent); font-weight: 800; background: #080d19; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 4px; border: 1px solid var(--border); }
-
-        .gateway-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; }
-        .gateway-item { background: #080d19; border: 1px solid var(--border); padding: 12px; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .gateway-item:hover, .gateway-item.active { border-color: var(--accent); background: #121c30; }
-        .gateway-item i { font-size: 22px; margin-bottom: 6px; display: block; }
-
-        /* History */
-        .history-item { background: #080d19; padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--success); display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; }
-        .history-item.minus { border-left-color: var(--primary); }
+        /* Forms */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 11px; color: #8a99ad; font-weight: 800; margin-bottom: 4px; }
+        .form-group input {
+            width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border);
+            padding: 12px; border-radius: 8px; color: #fff; font-weight: 700; outline: none;
+        }
+        .form-group input:focus { border-color: var(--neon-cyan); box-shadow: 0 0 10px var(--neon-cyan); }
 
         /* Bottom Nav */
         .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: #080d19;
-            border-top: 2px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(3, 5, 10, 0.9);
+            border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000;
+            backdrop-filter: blur(12px);
         }
-        .nav-link { color: var(--text-muted); text-decoration: none; font-size: 10px; font-weight: 800; text-align: center; cursor: pointer; flex: 1; text-transform: uppercase; }
-        .nav-link i { font-size: 18px; display: block; margin-bottom: 4px; }
-        .nav-link.active { color: var(--primary); }
+        .nav-item { color: #8a99ad; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; flex: 1; text-transform: uppercase; }
+        .nav-item i { font-size: 18px; display: block; margin-bottom: 2px; }
+        .nav-item.active { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
     </style>
 </head>
 <body>
 
-    <!-- App Header -->
-    <div class="app-header">
+    <!-- LIVE MATRIX/PARTICLE BACKGROUND CANVAS -->
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- Header -->
+    <div class="header">
         <div class="brand">
-            <div class="brand-logo" id="appLogo">SG</div>
-            <div class="brand-title">SG Esports <span>ELITE HUB</span></div>
+            <div class="logo">SG</div>
+            <div class="brand-text">SG ESPORTS</div>
         </div>
-        <div class="wallet-badge" onclick="switchTab('depositTab', document.querySelectorAll('.nav-link')[2])">
-            <i class="fa-solid fa-wallet"></i>
-            <span class="wallet-amount">₹<span id="userBalance">100.00</span></span>
+        <div class="wallet-btn" onclick="switchNav('depositView', 2)">
+            <i class="fa-solid fa-wallet"></i> ₹<span id="userBalance">100.00</span>
         </div>
     </div>
 
-    <!-- 1. HOME TAB (TOURNAMENTS) -->
-    <div id="homeTab" class="tab-view active">
-        <div class="filter-scroll">
-            <button class="filter-btn active" onclick="filterMatches('ALL', this)">ALL MODES</button>
-            <button class="filter-btn" onclick="filterMatches('BR', this)">BR CUSTOM</button>
-            <button class="filter-btn" onclick="filterMatches('CS', this)">CLASH SQUAD</button>
-            <button class="filter-btn" onclick="filterMatches('LONE', this)">LONE WOLF 1v1</button>
+    <!-- Banner -->
+    <div class="banner-box">
+        <div class="banner-card">
+            <h2>🔥 ULTRA CYBERPUNK TOURNAMENTS</h2>
+            <p style="font-size:12px; color:#ccc; margin-top:4px;">लाइव स्लॉट चुनकर जॉइन करें और जीतें रियल कैश!</p>
+        </div>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories">
+        <button class="cat-btn active" onclick="filterMatches('ALL', this)">ALL MATCHES</button>
+        <button class="cat-btn" onclick="filterMatches('BR', this)">BR SQUAD</button>
+        <button class="cat-btn" onclick="filterMatches('CS', this)">CLASH SQUAD</button>
+        <button class="cat-btn" onclick="filterMatches('LONE', this)">LONE WOLF</button>
+    </div>
+
+    <!-- 1. HOME TAB -->
+    <div id="homeView" class="tab-view active">
+        <!-- Match 1 -->
+        <div class="match-card" data-cat="BR">
+            <div class="match-header">
+                <span class="match-title">MEGA BR SQUAD WAR</span>
+                <span class="match-badge">BERMUDA</span>
+            </div>
+            <div class="match-body">
+                <div class="stats-grid">
+                    <div class="stat-item"><span>PRIZE POOL</span><strong style="color:var(--neon-green)">₹1000</strong></div>
+                    <div class="stat-item"><span>PER KILL</span><strong>₹15</strong></div>
+                    <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹30</strong></div>
+                </div>
+                <div class="room-box" id="roomBox1">ROOM ID: 8849201 | PASS: 1234</div>
+                <button class="btn-neon" onclick="openSeatModal('MEGA BR SQUAD', 30, 48, 12, 'roomBox1')">JOIN & SELECT SLOT (₹30)</button>
+            </div>
         </div>
 
-        <div id="matchContainer" style="margin-top: 15px;">
-            <!-- BR Squad Tournament Card -->
-            <div class="match-card" data-category="BR">
-                <div class="match-banner" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600');">
-                    <span class="mode-badge">BERMUDA</span>
-                    <span class="type-badge">BR SQUAD</span>
-                </div>
-                <div class="match-info">
-                    <div class="match-title"><i class="fa-solid fa-fire" style="color: var(--primary);"></i> MEGA BR SQUAD WAR</div>
-                    <div class="stats-grid">
-                        <div class="stat-item"><span>PRIZE POOL</span><strong class="prize">₹1000</strong></div>
-                        <div class="stat-item"><span>PER KILL</span><strong>₹15</strong></div>
-                        <div class="stat-item"><span>ENTRY FEE</span><strong style="color: var(--secondary);">₹30</strong></div>
-                    </div>
-                    <div class="slots-container">
-                        <div class="slots-label"><span>Available Seats</span><span id="slotText1">32 / 48</span></div>
-                        <div class="slots-bar"><div class="slots-fill" id="slotFill1" style="width: 66%;"></div></div>
-                    </div>
-                    <button class="btn-action" onclick="openSeatModal('BR Squad War', 30, 48, 16)">JOIN & SELECT SEAT (₹30)</button>
-                </div>
+        <!-- Match 2 -->
+        <div class="match-card" data-cat="CS">
+            <div class="match-header">
+                <span class="match-title">CLASH SQUAD 4v4 PRO</span>
+                <span class="match-badge" style="background:var(--neon-cyan); color:#000;">CS 4v4</span>
             </div>
-
-            <!-- Clash Squad 4v4 Card -->
-            <div class="match-card" data-category="CS">
-                <div class="match-banner" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600');">
-                    <span class="mode-badge">CS BERMUDA</span>
-                    <span class="type-badge" style="background: var(--accent); color:#000;">CS 4v4</span>
+            <div class="match-body">
+                <div class="stats-grid">
+                    <div class="stat-item"><span>WINNER</span><strong style="color:var(--neon-green)">₹400</strong></div>
+                    <div class="stat-item"><span>TYPE</span><strong>4v4</strong></div>
+                    <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹50</strong></div>
                 </div>
-                <div class="match-info">
-                    <div class="match-title"><i class="fa-solid fa-trophy" style="color: var(--secondary);"></i> CLASH SQUAD 4v4 ULTIMATE</div>
-                    <div class="stats-grid">
-                        <div class="stat-item"><span>WINNER</span><strong class="prize">₹400</strong></div>
-                        <div class="stat-item"><span>TYPE</span><strong>4v4</strong></div>
-                        <div class="stat-item"><span>ENTRY FEE</span><strong style="color: var(--secondary);">₹50</strong></div>
-                    </div>
-                    <div class="slots-container">
-                        <div class="slots-label"><span>Available Seats</span><span id="slotText2">6 / 8</span></div>
-                        <div class="slots-bar"><div class="slots-fill" id="slotFill2" style="width: 75%;"></div></div>
-                    </div>
-                    <button class="btn-action" onclick="openSeatModal('CS 4v4 Ultimate', 50, 8, 2)">JOIN & SELECT SEAT (₹50)</button>
-                </div>
-            </div>
-
-            <!-- Lone Wolf 1v1 Card -->
-            <div class="match-card" data-category="LONE">
-                <div class="match-banner" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600');">
-                    <span class="mode-badge">LONE WOLF</span>
-                    <span class="type-badge" style="background: var(--success); color:#000;">1v1 BATTLE</span>
-                </div>
-                <div class="match-info">
-                    <div class="match-title"><i class="fa-solid fa-bolt" style="color: var(--accent);"></i> LONE WOLF 1v1 HEADSHOT WAR</div>
-                    <div class="stats-grid">
-                        <div class="stat-item"><span>WINNER</span><strong class="prize">₹100</strong></div>
-                        <div class="stat-item"><span>MAP</span><strong>1v1</strong></div>
-                        <div class="stat-item"><span>ENTRY FEE</span><strong style="color: var(--secondary);">₹60</strong></div>
-                    </div>
-                    <div class="slots-container">
-                        <div class="slots-label"><span>Available Seats</span><span>1 / 2</span></div>
-                        <div class="slots-bar"><div class="slots-fill" style="width: 50%;"></div></div>
-                    </div>
-                    <button class="btn-action" onclick="openSeatModal('Lone Wolf 1v1', 60, 2, 1)">JOIN & SELECT SEAT (₹60)</button>
-                </div>
+                <div class="room-box" id="roomBox2">ROOM ID: 9910482 | PASS: 7788</div>
+                <button class="btn-neon" onclick="openSeatModal('CS 4v4 PRO', 50, 8, 3, 'roomBox2')">JOIN & SELECT SLOT (₹50)</button>
             </div>
         </div>
     </div>
 
     <!-- 2. GIVEAWAY TAB -->
-    <div id="giveawayTab" class="tab-view">
-        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--secondary);"><i class="fa-solid fa-gift"></i> FREE REWARDS & GIVEAWAYS</h2>
-        <div class="profile-card">
-            <h3 style="color:var(--accent); font-size:16px; font-weight:900;">🎁 DAILY FREE REDEEM CODE</h3>
-            <p style="font-size:12px; color:var(--text-muted); margin: 6px 0 12px 0;">नीचे 'CLAIM' बटन पर क्लिक करके अपने वॉलेट में सीधे ₹15 का फ्री रिवॉर्ड पाएँ!</p>
-            <button class="btn-action" style="background: linear-gradient(45deg, var(--secondary), #e67e00); color:#000;" onclick="claimFreeReward()">CLAIM DAILY REWARD NOW</button>
+    <div id="giveawayView" class="tab-view">
+        <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif; margin-bottom:12px;">🎁 DAILY FREE REWARD</h3>
+        <div class="match-card" style="padding:16px; text-align:center;">
+            <p style="font-size:13px; margin-bottom:12px;">नीचे दिए गए बटन पर क्लिक करके रोज़ाना ₹15 फ्री बोनस क्लेम करें!</p>
+            <button class="btn-neon" style="background:var(--neon-gold); color:#000;" onclick="claimReward()">CLAIM ₹15 NOW</button>
         </div>
     </div>
 
-    <!-- 3. DEPOSIT TAB (UPI & GATEWAY) -->
-    <div id="depositTab" class="tab-view">
-        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--success);"><i class="fa-solid fa-plus-circle"></i> INSTANT ADD MONEY</h2>
-        <div class="profile-card">
+    <!-- 3. DEPOSIT TAB -->
+    <div id="depositView" class="tab-view">
+        <h3 style="color:var(--neon-green); font-family:'Orbitron',sans-serif; margin-bottom:12px;">💳 INSTANT DEPOSIT</h3>
+        <div class="match-card" style="padding:16px;">
             <div class="form-group">
-                <label>Enter Amount (₹)</label>
-                <input type="number" id="depAmt" placeholder="Minimum ₹10" oninput="generateQR()">
+                <label>ENTER AMOUNT (₹)</label>
+                <input type="number" id="depAmt" placeholder="Minimum ₹10" oninput="showQR()">
             </div>
-            
-            <label style="font-size: 11px; color: var(--text-muted); font-weight: 800;">SELECT PAYMENT METHOD:</label>
-            <div class="gateway-grid">
-                <div class="gateway-item active" onclick="payWithApp('PhonePe')">
-                    <i class="fa-solid fa-mobile-screen-button" style="color:#673ab7;"></i>
-                    <span style="font-size:10px; font-weight:800;">PHONEPE</span>
-                </div>
-                <div class="gateway-item" onclick="payWithApp('Paytm')">
-                    <i class="fa-solid fa-wallet" style="color:#00baf2;"></i>
-                    <span style="font-size:10px; font-weight:800;">PAYTM</span>
-                </div>
-                <div class="gateway-item" onclick="payWithApp('GPay')">
-                    <i class=
+            <div id="qrBox" style="display:none; text-align:center; margin:12px 0;">
+                <img id="qrImg" src="" style="width:160px; background:#fff; padding:6px; border-radius:10px; border:2px solid var(--neon-cyan);">
+                <p style="font-size:12px; color:var(--neon-cyan); font-weight:800; margin-top:6px;">UPI ID: shishpalji@fam</p>
+            </div>
+            <div class="form-group">
+                <label>12-DIGIT UTR / TRANSACTION NO.</label>
+                <input type="text" id="utrVal" placeholder="Ex: 402910394812">
+            </div>
+            <button class="btn-neon" onclick="submitDeposit()">SUBMIT PAYMENT</button>
+        </div>
+    </div>
+
+    <!-- 4. WITHDRAW TAB -->
+    <div id="withdrawView" class="tab-view">
+        <h3 style="color:var(--neon-red); font-family:'Orbitron',sans-serif; margin-bottom:12px;">💸 WITHDRAW WINNINGS</h3>
+        <div class="match-card" style="padding:16px;">
+            <div class="form-group">
+                <label>YOUR UPI ID / PHONE NUMBER</label>
+                <input type="text" id="wUpi" placeholder="shishpalji@fam">
+            </div>
+            <div class="form-group">
+                <label>WITHDRAW AMOUNT (₹)</label>
+                <input type="number" id="wAmt" placeholder="Minimum ₹50">
+            </div>
+            <button class="btn-neon" onclick="submitWithdraw()">REQUEST WITHDRAW</button>
+        </div>
+    </div>
+
+    <!-- 5. PROFILE TAB -->
+    <div id="profileView" class="tab-view">
+        <div class="match-card" style="padding:16px;">
+            <h3 id="pName" style="font-family:'Orbitron',sans-serif;">PLAYER PRO</h3>
+            <p style="font-size:12px; color:var(--neon-cyan); margin-top:4px;">GAME UID: <span id="pUid">784910238</span></p>
+            <button class="btn-neon" style="margin-top:12px; background:rgba(20,31,54,0.8);" onclick="editProfile()">EDIT PROFILE</button>
+            <a href="https://wa.me/?text=Join%20SG%20Esports!" target="_blank" style="display:block; text-align:center; margin-top:14px; color:var(--neon-green); font-weight:800; text-decoration:none;">📲 WHATSAPP SUPPORT</a>
+        </div>
+    </div>
+
+    <!-- Modal Grid -->
+    <div class="modal" id="seatModal">
+        <div class="modal-content">
+            <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif;" id="mTitle">SELECT SEAT</h3>
+            <div class="seat-grid" id="seatGrid"></div>
+            <button class="btn-neon" onclick="confirmSeat()">CONFIRM SLOT</button>
+        </div>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchNav('homeView', 0)"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-item" onclick="switchNav('giveawayView', 1)"><i class="fa-solid fa-gift"></i>Giveaway</div>
+        <div class="nav-item" onclick="switchNav('depositView', 2)"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
+        <div class="nav-item" onclick="switchNav('withdrawView', 3)"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
+        <div class="nav-item" onclick="switchNav('profileView', 4)"><i class="fa-solid fa-user"></i>Profile</div>
+    </div>
+
+    <!-- JAVASCRIPT & LIVE ANIMATION ENGINE -->
+    <script>
+        // Live Canvas Particle Background Animation Engine
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedY = Math.random() * 1 + 0.2;
+                this.color = Math.random() > 0.5 ? '#00f0ff' : '#ff0055';
+            }
+            update() {
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 45; i++) particles.push(new Particle());
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // App Core Logic
+        let balance = 100.00;
+        let selectedSeat = null;
+        let activeFee = 0;
+        let activeRoomBox = null;
+        const upi = "shishpalji@fam";
+
+        function switchNav(viewId, index) {
+            document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach((item, i) => {
+                if(i === index) item.classList.add('active');
+                else item.classList.remove('active');
+            });
+        }
+
+        function filterMatches(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            document.querySelectorAll('.match-card').forEach(card => {
+                if(cat === 'ALL' || card.getAttribute('data-cat') === cat) card.style.display = 'block';
+                else card.style.display = 'none';
+            });
+        }
+
+        function openSeatModal(title, fee, total, taken, roomBoxId) {
+            activeFee = fee;
+            activeRoomBox = roomBoxId;
+            selectedSeat = null;
+            document.getElementById('mTitle').innerText = title;
+
+            let grid = document.getElementById('seatGrid');
+            grid.innerHTML = '';
+
+            for(let i = 1; i <= total; i++) {
+                let div = document.createElement('div');
+                let isTaken = i <= taken;
+                div.className = `seat-box ${isTaken ? 'taken' : ''}`;
+                div.innerText = `#${i}`;
+
+                if(!isTaken) {
+                    div.onclick = function() {
+                      
