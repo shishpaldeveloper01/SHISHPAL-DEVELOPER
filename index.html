@@ -3,361 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SG Esports - Free Fire Tournament Hub</title>
+    <title>SG Esports - Elite Gaming Hub</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4655;
-            --secondary: #ffaa00;
-            --bg-dark: #0a0e17;
-            --card-bg: #131a2a;
+            --primary: #ff003c;
+            --secondary: #ffb700;
+            --bg-dark: #06090e;
+            --card-bg: #0d131f;
             --accent: #00f0ff;
-            --success: #4ade80;
+            --success: #00ff66;
+            --text-muted: #8c9ba5;
+            --border-color: #1e293b;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif, system-ui; -webkit-tap-highlight-color: transparent; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-dark); color: #ffffff; padding-bottom: 90px; }
-        
-        /* Top App Bar */
-        .app-bar { background: #0f1523; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 99; }
+
+        /* Top Header */
+        .app-header { background: #0b0f19; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 99; box-shadow: 0 4px 20px rgba(255, 0, 60, 0.25); }
         .brand { display: flex; align-items: center; gap: 10px; }
-        .brand-logo { width: 36px; height: 36px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; font-size: 18px; transform: rotate(-5deg); box-shadow: 0 0 10px rgba(255,70,85,0.6); }
-        .brand-title { font-size: 18px; font-weight: 800; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
+        .brand-logo { width: 38px; height: 38px; background: linear-gradient(135deg, var(--primary), #990024); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff; font-size: 18px; transform: rotate(-5deg); box-shadow: 0 0 12px rgba(255, 0, 60, 0.6); }
+        .brand-title { font-size: 19px; font-weight: 900; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
         .brand-title span { color: var(--secondary); }
-        
-        .wallet-badge { background: #1a2336; border: 1px solid var(--secondary); padding: 6px 14px; border-radius: 20px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+        .wallet-badge { background: #131b2c; border: 1px solid var(--secondary); padding: 6px 14px; border-radius: 20px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .wallet-badge i { color: var(--secondary); font-size: 14px; }
         .wallet-amount { font-weight: 800; color: var(--success); font-size: 15px; }
 
-        /* Category Filter Tabs */
-        .category-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 12px 15px; background: #0c121e; scrollbar-width: none; }
-        .category-scroll::-webkit-scrollbar { display: none; }
-        .cat-btn { background: #162032; border: 1px solid #232d42; color: #94a3b8; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; white-space: nowrap; cursor: pointer; transition: 0.2s; }
-        .cat-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 10px rgba(255,70,85,0.5); }
+        /* Filter Tabs */
+        .filter-scroll { display: flex; gap: 10px; overflow-x: auto; padding: 12px 15px; background: #080c14; scrollbar-width: none; border-bottom: 1px solid var(--border-color); }
+        .filter-scroll::-webkit-scrollbar { display: none; }
+        .filter-btn { background: #101726; border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 800; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+        .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); box-shadow: 0 0 12px rgba(255,0,60,0.5); }
 
-        /* Match Card */
-        .tournament-card { background: var(--card-bg); border-radius: 16px; margin: 0 15px 20px 15px; border: 1px solid #232d42; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        
-        /* Banner Image Box */
-        .card-banner { width: 100%; height: 150px; background-size: cover; background-position: center; position: relative; }
-        .mode-badge { position: absolute; top: 12px; left: 12px; background: rgba(0, 0, 0, 0.75); border: 1px solid var(--accent); color: var(--accent); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; backdrop-filter: blur(4px); text-transform: uppercase; }
+        /* Views */
+        .tab-view { display: none; padding: 15px; }
+        .tab-view.active { display: block; }
+
+        /* Match Box Cards */
+        .match-card { background: var(--card-bg); border-radius: 16px; margin-bottom: 20px; border: 1px solid var(--border-color); overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; }
+        .match-banner { width: 100%; height: 160px; background-size: cover; background-position: center; position: relative; }
+        .mode-badge { position: absolute; top: 12px; left: 12px; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--accent); color: var(--accent); font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
         .type-badge { position: absolute; top: 12px; right: 12px; background: var(--primary); color: #fff; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
 
-        .match-header { background: #1a2336; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #2a364f; }
-        .match-time { font-size: 12px; font-weight: 700; color: var(--secondary); display: flex; align-items: center; gap: 5px; }
-
-        .match-body { padding: 15px; }
+        .match-info { padding: 15px; }
         .match-title { font-size: 18px; font-weight: 900; text-transform: uppercase; margin-bottom: 12px; color: #fff; display: flex; align-items: center; gap: 8px; }
-        
-        /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #0a0e17; padding: 12px; border-radius: 12px; text-align: center; margin-bottom: 12px; border: 1px solid #1a2336; }
-        .stat-item span { font-size: 10px; color: #64748b; font-weight: 700; text-transform: uppercase; display: block; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #070b12; padding: 12px; border-radius: 12px; text-align: center; margin-bottom: 12px; border: 1px solid var(--border-color); }
+        .stat-item span { font-size: 10px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; display: block; }
         .stat-item strong { font-size: 15px; color: #fff; font-weight: 800; margin-top: 2px; display: block; }
         .stat-item strong.prize { color: var(--success); }
 
-        /* Slots Bar */
         .slots-container { margin-bottom: 14px; }
-        .slots-label { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 4px; }
-        .slots-bar { width: 100%; height: 8px; background: #0a0e17; border-radius: 10px; overflow: hidden; border: 1px solid #232d42; }
+        .slots-label { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
+        .slots-bar { width: 100%; height: 8px; background: #070b12; border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); }
         .slots-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); border-radius: 10px; }
 
-        /* Room Box */
-        .room-box { background: rgba(255, 170, 0, 0.1); border: 1px dashed var(--secondary); padding: 10px; border-radius: 10px; text-align: center; margin-bottom: 14px; }
-        .room-box p { font-size: 11px; color: var(--secondary); font-weight: 700; }
-        .room-box strong { font-size: 13px; color: #fff; letter-spacing: 1px; display: block; margin-top: 2px; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, var(--primary), #b3002a); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(255,0,60,0.4); }
 
-        .btn-join { width: 100%; background: linear-gradient(45deg, var(--primary), #e60026); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; box-shadow: 0 4px 15px rgba(255,70,85,0.4); }
+        /* Giveaway Cards */
+        .giveaway-card { background: linear-gradient(135deg, #181200, #0d131f); border: 1px solid var(--secondary); border-radius: 16px; padding: 18px; margin-bottom: 15px; }
+        .giveaway-title { font-size: 18px; font-weight: 900; color: var(--secondary); margin-bottom: 8px; }
+        .redeem-box { background: #070b12; padding: 12px; border-radius: 8px; border: 1px dashed var(--accent); margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .redeem-code { font-family: monospace; font-size: 16px; font-weight: 900; color: var(--accent); letter-spacing: 2px; }
 
-        /* Modal Overlay */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
-        .modal-content { background: #131a2a; width: 100%; max-width: 400px; border-radius: 16px; padding: 20px; border: 1px solid #232d42; box-shadow: 0 10px 30px rgba(0,0,0,0.8); text-align: center; }
+        /* Profile Styles */
+        .profile-card { background: var(--card-bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); margin-bottom: 15px; }
+        .user-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+        .avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; font-size: 24px; color: #fff; font-weight: 900; border: 2px solid var(--secondary); }
+        .user-details h3 { font-size: 18px; font-weight: 900; color: #fff; }
+        .user-uid { font-size: 12px; color: var(--accent); font-weight: 800; background: #070b12; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-top: 4px; border: 1px solid var(--border-color); }
+
+        .profile-btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; }
+        .btn-sec { background: #131d2e; border: 1px solid var(--border-color); color: #fff; padding: 10px; border-radius: 8px; font-weight: 800; font-size: 12px; cursor: pointer; text-transform: uppercase; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+        .support-box { background: #09121d; border: 1px solid var(--accent); border-radius: 12px; padding: 15px; margin-top: 15px; }
+        .support-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+        .support-item:last-child { border-bottom: none; }
+
+        .history-list { margin-top: 10px; }
+        .history-item { background: #070b12; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; border-left: 4px solid var(--success); display: flex; justify-content: space-between; font-size: 12px; }
+        .history-item.withdraw { border-left-color: var(--primary); }
+
+        /* Seat Selector Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+        .modal-content { background: #0d131f; width: 100%; max-width: 400px; border-radius: 16px; padding: 20px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .modal-header h3 { color: var(--secondary); font-size: 18px; font-weight: 800; }
-        .close-btn { color: #64748b; font-size: 20px; cursor: pointer; }
+        .close-btn { color: var(--text-muted); font-size: 20px; cursor: pointer; }
 
+        .seat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 15px 0; max-height: 200px; overflow-y: auto; padding: 5px; }
+        .seat-box { background: #131d2e; border: 1px solid var(--border-color); padding: 8px 0; border-radius: 6px; text-align: center; font-size: 11px; font-weight: 800; cursor: pointer; }
+        .seat-box.selected { background: var(--success); color: #000; border-color: var(--success); }
+        .seat-box.taken { background: #231216; color: #ff4d4d; border-color: #4a151b; cursor: not-allowed; }
+
+        /* Forms */
         .form-group { margin-bottom: 14px; text-align: left; }
-        .form-group label { display: block; font-size: 12px; color: #94a3b8; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
-        .form-group input { width: 100%; background: #0a0e17; border: 1px solid #232d42; padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; outline: none; }
+        .form-group label { display: block; font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+        .form-group input { width: 100%; background: #070b12; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; outline: none; }
 
-        /* QR Container */
-        .qr-box { background: #ffffff; padding: 12px; border-radius: 12px; display: inline-block; margin: 10px 0; border: 2px solid var(--secondary); }
-        .qr-box img { width: 180px; height: 180px; display: block; }
-        .upi-text { font-size: 12px; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
-
-        .btn-pay { width: 100%; background: linear-gradient(45deg, #00c6ff, #0072ff); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 800; font-size: 14px; cursor: pointer; text-transform: uppercase; margin-top: 8px; }
-
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #0f1523; border-top: 1px solid #1a2336; display: flex; justify-content: space-around; padding: 8px 0; z-index: 99; }
-        .nav-link { color: #64748b; text-decoration: none; font-size: 11px; font-weight: 700; text-align: center; cursor: pointer; }
+        /* Bottom Navigation Bar */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #090d16; border-top: 2px solid var(--border-color); display: flex; justify-content: space-around; padding: 8px 0; z-index: 99; }
+        .nav-link { color: var(--text-muted); text-decoration: none; font-size: 10px; font-weight: 800; text-align: center; cursor: pointer; flex: 1; text-transform: uppercase; }
         .nav-link i { font-size: 18px; display: block; margin-bottom: 3px; }
         .nav-link.active { color: var(--primary); }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="app-bar">
+    <!-- App Header -->
+    <div class="app-header">
         <div class="brand">
-            <div class="brand-logo">FF</div>
+            <div class="brand-logo">SG</div>
             <div class="brand-title">SG <span>ESPORTS</span></div>
         </div>
-        <div class="wallet-badge" onclick="openDepositModal()">
+        <div class="wallet-badge" onclick="switchTab('depositTab')">
             <i class="fa-solid fa-wallet"></i>
-            <span class="wallet-amount">₹<span id="balance">0.00</span></span>
+            <span class="wallet-amount">₹<span id="userBalance">0.00</span></span>
         </div>
     </div>
 
-    <!-- Category Filter Tabs -->
-    <div class="category-scroll">
-        <button class="cat-btn active" onclick="filterMatches('ALL')">ALL MATCHES</button>
-        <button class="cat-btn" onclick="filterMatches('BR')">BR CUSTOM (SOLO/DUO/SQUAD)</button>
-        <button class="cat-btn" onclick="filterMatches('CS')">CLASH SQUAD (4v4 / 6v6)</button>
-        <button class="cat-btn" onclick="filterMatches('LONE')">LONE WOLF (1v1 / 2v2)</button>
+    <!-- 1. HOME TAB VIEW -->
+    <div id="homeTab" class="tab-view active">
+        <!-- Filter Bar -->
+        <div class="filter-scroll">
+            <button class="filter-btn active" onclick="filterMatches('ALL', event)">ALL MODES</button>
+            <button class="filter-btn" onclick="filterMatches('BR', event)">BR CUSTOM</button>
+            <button class="filter-btn" onclick="filterMatches('CS', event)">CLASH SQUAD</button>
+            <button class="filter-btn" onclick="filterMatches('LONE', event)">LONE WOLF 1v1</button>
+        </div>
+
+        <div id="matchContainer" style="margin-top: 15px;">
+            <!-- BR Squad Box -->
+            <div class="match-card" data-category="BR">
+                <div class="match-banner" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600');">
+                    <span class="mode-badge">BERMUDA</span>
+                    <span class="type-badge">BR SQUAD</span>
+                </div>
+                <div class="match-info">
+                    <div class="match-title"><i class="fa-solid fa-fire" style="color: var(--primary);"></i> MEGA BR SQUAD WAR</div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><span>PRIZE POOL</span><strong class="prize">₹1000</strong></div>
+                        <div class="stat-item"><span>PER KILL</span><strong>₹15</strong></div>
+                        <div class="stat-item"><span>ENTRY</span><strong style="color: var(--secondary);">₹30</strong></div>
+                    </div>
+                    <div class="slots-container">
+                        <div class="slots-label"><span>Available Seats</span><span>32 / 48</span></div>
+                        <div class="slots-bar"><div class="slots-fill" style="width: 66%;"></div></div>
+                    </div>
+                    <button class="btn-action" onclick="openSeatModal('BR Squad War', 30)">JOIN & SELECT SEAT (₹30)</button>
+                </div>
+            </div>
+
+            <!-- Clash Squad Box -->
+            <div class="match-card" data-category="CS">
+                <div class="match-banner" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600');">
+                    <span class="mode-badge">CS BERMUDA</span>
+                    <span class="type-badge" style="background: var(--accent); color:#000;">CS 4v4</span>
+                </div>
+                <div class="match-info">
+                    <div class="match-title"><i class="fa-solid fa-trophy" style="color: var(--secondary);"></i> CLASH SQUAD 4v4 SHOWDOWN</div>
+                    <div class="stats-grid">
+                        <div class="stat-item"><span>WINNER</span><strong class="prize">₹400</strong></div>
+                        <div class="stat-item"><span>PER KILL</span><strong>₹0</strong></div>
+                        <div class="stat-item"><span>ENTRY</span><strong style="color: var(--secondary);">₹50</strong></div>
+                    </div>
+                    <div class="slots-container">
+                        <div class="slots-label"><span>Available Seats</span><span>6 / 8</span></div>
+                        <div class="slots-bar"><div class="slots-fill" style="width: 75%;"></div></div>
+                    </div>
+                    <button class="btn-action" onclick="openSeatModal('CS 4v4 Showdown', 50)">JOIN & SELECT SEAT (₹50)</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Match List Container -->
-    <div id="matchContainer">
-
-        <!-- 1. BR SQUAD CUSTOM MATCH CARD -->
-        <div class="tournament-card" data-category="BR">
-            <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=600');">
-                <span class="mode-badge">BERMUDA MAP</span>
-                <span class="type-badge">BR SQUAD</span>
-            </div>
-            <div class="match-header">
-                <span class="match-time"><i class="fa-regular fa-clock"></i> TODAY, 07:00 PM</span>
-                <span style="font-size: 11px; color: var(--accent); font-weight: 800;">48 SLOTS</span>
-            </div>
-            <div class="match-body">
-                <div class="match-title"><i class="fa-solid fa-fire" style="color: var(--primary);"></i> MEGA BR SQUAD LEAGUE</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span>PRIZE POOL</span>
-                        <strong class="prize">₹1000</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>PER KILL</span>
-                        <strong>₹15</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>ENTRY FEE</span>
-                        <strong style="color: var(--secondary);">₹30</strong>
-                    </div>
-                </div>
-
-                <div class="slots-container">
-                    <div class="slots-label">
-                        <span>Spots Joined</span>
-                        <span>32 / 48</span>
-                    </div>
-                    <div class="slots-bar">
-                        <div class="slots-fill" style="width: 66%;"></div>
-                    </div>
-                </div>
-
-                <div class="room-box">
-                    <p>🔒 Room ID & Password (Visible after joining)</p>
-                    <strong>ROOM ID: HIDDEN | PASS: HIDDEN</strong>
-                </div>
-
-                <button class="btn-join" onclick="joinMatch(30, 'BR Squad League')">JOIN MATCH (₹30)</button>
+    <!-- 2. GIVEAWAY TAB VIEW -->
+    <div id="giveawayTab" class="tab-view">
+        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--secondary);"><i class="fa-solid fa-gift"></i> FREE GIVEAWAYS & REDEEM CODES</h2>
+        
+        <div class="giveaway-card">
+            <div class="giveaway-title">🎁 FREE GOOGLE PLAY REDEEM CODE</div>
+            <p style="font-size: 12px; color: var(--text-muted);">रोजाना फ्री रिडीम कोड्स प्राप्त करें। नीचे बटन दबाकर कोड कॉपी करें।</p>
+            <div class="redeem-box">
+                <span class="redeem-code" id="code1">SG89-FF99-PLAY-CODE</span>
+                <button class="btn-sec" onclick="copyCode('code1')">COPY</button>
             </div>
         </div>
 
-        <!-- 2. CLASH SQUAD 4v4 CUSTOM MATCH CARD -->
-        <div class="tournament-card" data-category="CS">
-            <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=600');">
-                <span class="mode-badge">CS BERMUDA</span>
-                <span class="type-badge" style="background: #00c6ff;">CS 4v4</span>
-            </div>
-            <div class="match-header">
-                <span class="match-time"><i class="fa-regular fa-clock"></i> TODAY, 08:30 PM</span>
-                <span style="font-size: 11px; color: var(--accent); font-weight: 800;">8 SLOTS</span>
-            </div>
-            <div class="match-body">
-                <div class="match-title"><i class="fa-solid fa-trophy" style="color: var(--secondary);"></i> CLASH SQUAD 4v4 SHOWDOWN</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span>WINNER TEAM</span>
-                        <strong class="prize">₹400</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>PER KILL</span>
-                        <strong>₹0</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>ENTRY FEE</span>
-                        <strong style="color: var(--secondary);">₹50</strong>
-                    </div>
-                </div>
-
-                <div class="slots-container">
-                    <div class="slots-label">
-                        <span>Spots Joined</span>
-                        <span>6 / 8</span>
-                    </div>
-                    <div class="slots-bar">
-                        <div class="slots-fill" style="width: 75%;"></div>
-                    </div>
-                </div>
-
-                <div class="room-box">
-                    <p>🔒 Room ID & Password</p>
-                    <strong>ROOM ID: HIDDEN | PASS: HIDDEN</strong>
-                </div>
-
-                <button class="btn-join" onclick="joinMatch(50, 'CS 4v4 Showdown')">JOIN MATCH (₹50)</button>
-            </div>
+        <div class="giveaway-card" style="border-color: var(--accent);">
+            <div class="giveaway-title" style="color: var(--accent);">💎 520 DIAMONDS CUSTOM GIVEAWAY</div>
+            <p style="font-size: 12px; color: var(--text-muted);">फ्री एंट्री कस्टम रूम! विजेता को मिलेगा 520 डायमंड्स का टॉप-अप।</p>
+            <button class="btn-action" style="background: linear-gradient(45deg, var(--accent), #0088cc); color:#000; margin-top: 10px;" onclick="alert('आप सक्सेसफुली गिववे एंट्री में शामिल हो चुके हैं!')">CLAIM FREE ENTRY</button>
         </div>
-
-        <!-- 3. CLASH SQUAD 6v6 CUSTOM MATCH CARD -->
-        <div class="tournament-card" data-category="CS">
-            <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=600');">
-                <span class="mode-badge">CS PURGATORY</span>
-                <span class="type-badge" style="background: #9333ea;">CS 6v6</span>
-            </div>
-            <div class="match-header">
-                <span class="match-time"><i class="fa-regular fa-clock"></i> TONIGHT, 09:30 PM</span>
-                <span style="font-size: 11px; color: var(--accent); font-weight: 800;">12 SLOTS</span>
-            </div>
-            <div class="match-body">
-                <div class="match-title"><i class="fa-solid fa-users-gear" style="color: var(--accent);"></i> CS 6v6 ULTIMATE WAR</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span>WINNER TEAM</span>
-                        <strong class="prize">₹600</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>PER KILL</span>
-                        <strong>₹0</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>ENTRY FEE</span>
-                        <strong style="color: var(--secondary);">₹40</strong>
-                    </div>
-                </div>
-
-                <div class="slots-container">
-                    <div class="slots-label">
-                        <span>Spots Joined</span>
-                        <span>4 / 12</span>
-                    </div>
-                    <div class="slots-bar">
-                        <div class="slots-fill" style="width: 33%;"></div>
-                    </div>
-                </div>
-
-                <div class="room-box">
-                    <p>🔒 Room ID & Password</p>
-                    <strong>ROOM ID: HIDDEN | PASS: HIDDEN</strong>
-                </div>
-
-                <button class="btn-join" onclick="joinMatch(40, 'CS 6v6 Ultimate War')">JOIN MATCH (₹40)</button>
-            </div>
-        </div>
-
-        <!-- 4. LONE WOLF 1v1 MATCH CARD -->
-        <div class="tournament-card" data-category="LONE">
-            <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1560253023-3ec5d502959f?q=80&w=600');">
-                <span class="mode-badge">IRON CAGE</span>
-                <span class="type-badge" style="background: #e11d48;">LONE WOLF 1v1</span>
-            </div>
-            <div class="match-header">
-                <span class="match-time"><i class="fa-regular fa-clock"></i> ANYTIME LIVE</span>
-                <span style="font-size: 11px; color: var(--accent); font-weight: 800;">2 SLOTS</span>
-            </div>
-            <div class="match-body">
-                <div class="match-title"><i class="fa-solid fa-skull" style="color: #e11d48;"></i> LONE WOLF 1v1 BATTLE</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span>WINNER PRIZE</span>
-                        <strong class="prize">₹35</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>PER KILL</span>
-                        <strong>₹0</strong>
-                    </div>
-                    <div class="stat-item">
-                        <span>ENTRY FEE</span>
-                        <strong style="color: var(--secondary);">₹20</strong>
-                    </div>
-                </div>
-
-                <div class="slots-container">
-                    <div class="slots-label">
-                        <span>Spots Joined</span>
-                        <span>1 / 2</span>
-                    </div>
-                    <div class="slots-bar">
-                        <div class="slots-fill" style="width: 50%;"></div>
-                    </div>
-                </div>
-
-                <div class="room-box">
-                    <p>🔒 Room ID & Password</p>
-                    <strong>ROOM ID: HIDDEN | PASS: HIDDEN</strong>
-                </div>
-
-                <button class="btn-join" onclick="joinMatch(20, 'Lone Wolf 1v1')">JOIN MATCH (₹20)</button>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Deposit Modal (No Minimum Deposit Limit) -->
-    <div class="modal" id="depositModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>💰 ADD MONEY (UPI / QR)</h3>
-                <i class="fa-solid fa-xmark close-btn" onclick="closeModal('depositModal')"></i>
+    <!-- 3. DEPOSIT TAB VIEW -->
+    <div id="depositTab" class="tab-view">
+        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--success);"><i class="fa-solid fa-plus-circle"></i> ADD MONEY TO WALLET</h2>
+        <div class="profile-card">
+            <div class="form-group">
+                <label>Deposit Amount (₹)</label>
+                <input type="number" id="depAmt" placeholder="Enter Amount (e.g. 50, 100)" oninput="renderQR()">
             </div>
             
-            <div class="form-group">
-                <label>Deposit Amount (₹) - [कोई न्यूनतम सीमा नहीं]</label>
-                <input type="number" id="depositAmount" placeholder="जितना मर्जी अमाउंट डालें (जैसे 10, 20, 100)" oninput="generateQR()">
-            </div>
-
-            <!-- Dynamic QR Code Display -->
-            <div id="qrArea" style="display: none;">
-                <div class="qr-box">
-                    <img id="qrImage" src="" alt="UPI QR Code">
+            <div id="qrArea" style="display:none; text-align: center; margin: 15px 0;">
+                <div style="background:#fff; padding:10px; border-radius:12px; display:inline-block;">
+                    <img id="qrImg" src="" style="width:160px; height:160px; display:block;">
                 </div>
-                <p class="upi-text">UPI ID: shishpalji@fam</p>
-                <p style="font-size: 11px; color: #94a3b8; margin-bottom: 10px;">क्यूआर कोड को स्कैन करें या नीचे बटन पर क्लिक करें</p>
+                <p style="font-size: 11px; color: var(--accent); margin-top: 6px;">Scan & Pay via UPI App</p>
             </div>
 
-            <button class="btn-pay" onclick="payViaUPI()"><i class="fa-solid fa-bolt"></i> OPEN UPI APP DIRECTLY</button>
-            
-            <hr style="border: 0.5px solid #232d42; margin: 15px 0;">
+            <button class="btn-action" style="background: linear-gradient(45deg, #00c6ff, #0072ff);" onclick="payDirectUPI()">PAY VIA INSTANT UPI</button>
+            <hr style="border-color: var(--border-color); margin: 15px 0;">
             
             <div class="form-group">
-                <label>Enter 12-Digit UTR / Ref No. (After Pay)</label>
-                <input type="text" id="utrNumber" placeholder="Enter UTR / Ref No.">
+                <label>Enter 12-Digit UTR / Ref Number</label>
+                <input type="text" id="utrVal" placeholder="Enter 12 Digit UTR Number">
             </div>
-            <button class="btn-join" onclick="submitDepositUTR()">SUBMIT UTR FOR APPROVAL</button>
+            <button class="btn-action" onclick="submitUTR()">SUBMIT UTR FOR VERIFICATION</button>
         </div>
     </div>
 
-    <!-- Withdraw Modal (No Minimum Withdrawal Limit) -->
-    <div class="modal" id="withdrawModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>💸 WITHDRAW MONEY</h3>
-                <i class="fa-solid fa-xmark close-btn" onclick="closeModal('withdrawModal')"></i>
+    <!-- 4. WITHDRAW TAB VIEW -->
+    <div id="withdrawTab" class="tab-view">
+        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-arrow-up-right-from-square"></i> WITHDRAW WINNINGS</h2>
+        <div class="profile-card">
+            <div class="form-group">
+                <label>Your Payment UPI / Phone Pay Number</label>
+                <input type="text" id="wUpi" placeholder="e.g. 9876543210@paytm or UPI ID">
             </div>
             <div class="form-group">
-                <label>Your UPI ID / Phone Number</label>
-                <input type="text" id="withdrawUPI" placeholder="उदा: name@fam या 9876543210">
+                <label>Withdraw Amount (₹)</label>
+                <input type="number" id="wAmt" placeholder="Enter amount to withdraw">
             </div>
-            <div class="form-group">
-                <label>Withdraw Amount (₹) - [कोई न्यूनतम सीमा नहीं]</label>
-                <input type="number" id="withdrawAmount" placeholder="जितना बैलेंस निकालना हो दर्ज करें">
-            </div>
-            <button class="btn-join" onclick="requestWithdrawal()">SUBMIT WITHDRAWAL</button>
+            <button class="btn-action" onclick="processWithdrawal()">REQUEST WITHDRAWAL</button>
         </div>
     </div>
 
-    <!-- Botto
+    <!-- 5. PROFILE TAB VIEW -->
+    <div id="profileTab" class="tab-view">
+        <div class="profile-card">
+            <div class="user-header">
+                <div class="avatar" id="avatarName">P</div>
+                <div class="user-details">
+                    <h3 id="profName">PLAYER PRO</h3>
+                    <div class="user-uid">GAME UID: <span id="profUid">784910238</span></div>
+                </div>
+            </div>
+
+            <div class="profile-btn-grid">
+                <button class="btn-sec" onclick="editProfile()"><i class="fa-solid fa-user-pen"></i> Edit Profile</button>
+                <button class="btn-sec" onclick="switchTab('withdrawTab')"><i class="fa-solid fa-wallet"></i> Withdraw</button>
+            </div>
+
+            <!-- Admin Dynamic Support Config Box -->
+            <div class="support-box">
+                <h4 style="font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 10px;"><i class="fa-solid fa-headset"></i> CUSTOMER SUPPORT</h4>
+                <div class="support-item">
+                    <span style="font-size: 12px; font-weight: 700;"><i class="fa-brands fa-whatsapp" style="color:var(--success);"></i> WhatsApp Admin</span>
+                    <a id="spWhatsappLink" href="https://wa.me/919999999999" target="_blank" style="color: var(--success); text-decoration: none; font-weight: 800; font-size: 12px;">Chat Now</a>
+                </div>
+                <div class="support-item">
+                    <span style="font-size: 12px; font-weight: 700;"><i class="fa-solid fa-envelope" style="color:var(--secondary);"></i> Official Email</span>
+                    <span id="spEmailText" style="color: var(--text-muted); font-size: 12px; font-weight: 700;">support@sgesports.com</span>
+                </div>
+            </div>
+
+            <!-- Wallet History -->
+            <div style="margin-top: 20px;">
+                <h4 style="font-size: 13px; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase;">TRANSACTION HISTORY</h4>
+                <div class="history-list" id="historyList">
+                    <div class="history-item"><span>➕ Deposit Added</span><strong style="color:var(--success);">+ ₹50.00</strong></div>
+                    <div class="history-item withdraw"><span>➖ Match Joined</span><strong style="color:var(--primary);">- ₹30.00</strong>
