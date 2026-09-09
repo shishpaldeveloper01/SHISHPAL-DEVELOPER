@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SG Esports - Official Portal 🎮</title>
+    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     
@@ -32,7 +33,6 @@
             border-bottom: 2px solid var(--neon-cyan);
             position: sticky; top: 0; z-index: 100;
             backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
         }
         .brand { display: flex; align-items: center; gap: 10px; }
         .logo {
@@ -42,9 +42,8 @@
             display: flex; align-items: center; justify-content: center;
             font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px;
             border: 1.5px solid var(--neon-cyan);
-            box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
         }
-        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 900; color: #fff; }
         
         .wallet-btn {
             background: rgba(0, 0, 0, 0.6);
@@ -54,7 +53,6 @@
             font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 13px;
             color: var(--neon-green);
             cursor: pointer;
-            box-shadow: 0 0 8px rgba(255, 183, 0, 0.2);
         }
 
         /* Categories Bar */
@@ -65,12 +63,11 @@
             border: 1px solid var(--card-border);
             color: #9ca3af; padding: 8px 18px;
             border-radius: 20px; font-weight: 800; font-size: 13px;
-            white-space: nowrap; cursor: pointer; transition: 0.2s;
+            white-space: nowrap; cursor: pointer;
         }
         .cat-btn.active {
             background: linear-gradient(135deg, var(--neon-red), #900030);
             color: #fff; border-color: var(--neon-red);
-            box-shadow: 0 0 12px rgba(255, 0, 85, 0.5);
         }
 
         /* Tab Views */
@@ -84,7 +81,6 @@
             margin-bottom: 16px;
             border: 1px solid var(--card-border);
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
         }
         .match-header {
             padding: 12px 14px;
@@ -99,7 +95,7 @@
         .stats-grid {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
             background: rgba(0, 0, 0, 0.35); padding: 12px; border-radius: 10px;
-            text-align: center; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center; margin-bottom: 12px;
         }
         .stat-item span { font-size: 10px; color: #9ca3af; font-weight: 700; display: block; }
         .stat-item strong { font-size: 15px; font-weight: 800; }
@@ -116,10 +112,9 @@
         .btn-neon {
             width: 100%;
             background: linear-gradient(135deg, var(--neon-red), #b3003b);
-            color: #fff; border: none; padding: 12px; border-radius: 10px;
+            color: #fff; border: none; padding: 14px; border-radius: 10px;
             font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 13px;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(255, 0, 85, 0.3);
+            cursor: pointer; text-transform: uppercase;
         }
 
         /* Modal Slot Picker */
@@ -131,15 +126,14 @@
         .modal-content {
             background: #111827; width: 100%; max-width: 400px;
             border-radius: 14px; padding: 18px; border: 1px solid var(--neon-cyan);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
         }
         .seat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 15px 0; max-height: 200px; overflow-y: auto; }
         .seat-box {
             background: #1f2937; border: 1px solid var(--card-border);
-            padding: 8px 0; border-radius: 6px; text-align: center;
+            padding: 10px 0; border-radius: 6px; text-align: center;
             font-weight: 800; font-size: 12px; cursor: pointer; color: #fff;
         }
-        .seat-box.selected { background: var(--neon-green) !important; color: #000 !important; font-weight: 900; }
+        .seat-box.selected { background: var(--neon-green) !important; color: #000 !important; }
         .seat-box.taken { background: rgba(255, 0, 85, 0.2) !important; color: var(--neon-red) !important; cursor: not-allowed; }
 
         /* Forms Inputs */
@@ -153,10 +147,9 @@
         /* Bottom Navigation */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(3, 7, 18, 0.95);
+            background: rgba(3, 7, 18, 0.98);
             border-top: 1px solid var(--card-border);
             display: flex; justify-content: space-around; padding: 10px 0; z-index: 2000;
-            backdrop-filter: blur(10px);
         }
         .nav-item { color: #9ca3af; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; flex: 1; text-transform: uppercase; }
         .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
@@ -165,27 +158,24 @@
 </head>
 <body>
 
-    <!-- Header Section -->
     <div class="header">
         <div class="brand">
             <div class="logo">SG</div>
             <div class="brand-text">SG ESPORTS 🏆</div>
         </div>
-        <div class="wallet-btn" onclick="openDepositTab()">
+        <div class="wallet-btn" id="btnWallet">
             <i class="fa-solid fa-wallet"></i> ₹<span id="userBalance">100.00</span>
         </div>
     </div>
 
-    <!-- Category Selector -->
     <div class="categories">
-        <button class="cat-btn active" onclick="filterCat('ALL', this)">🔥 ALL MATCHES</button>
-        <button class="cat-btn" onclick="filterCat('BR', this)">🪂 BR SQUAD</button>
-        <button class="cat-btn" onclick="filterCat('CS', this)">⚔️ CLASH SQUAD</button>
+        <button class="cat-btn active" data-cat="ALL">🔥 ALL MATCHES</button>
+        <button class="cat-btn" data-cat="BR">🪂 BR SQUAD</button>
+        <button class="cat-btn" data-cat="CS">⚔️ CLASH SQUAD</button>
     </div>
 
     <!-- 1. HOME TAB -->
     <div id="homeView" class="tab-view active">
-        <!-- Match 1 -->
         <div class="match-card match-item" data-cat="BR">
             <div class="match-header">
                 <span class="match-title">🔥 MEGA BR SQUAD WAR</span>
@@ -198,11 +188,10 @@
                     <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹30 🪙</strong></div>
                 </div>
                 <div class="room-box" id="roomBox1">🔑 ROOM ID: 8849201 | PASS: 1234</div>
-                <button class="btn-neon" onclick="openSlotModal('MEGA BR SQUAD', 30, 48, 12, 'roomBox1')">JOIN & SELECT SLOT (₹30)</button>
+                <button class="btn-neon join-btn" data-title="MEGA BR SQUAD" data-fee="30" data-total="48" data-taken="12" data-room="roomBox1">JOIN & SELECT SLOT (₹30)</button>
             </div>
         </div>
 
-        <!-- Match 2 -->
         <div class="match-card match-item" data-cat="CS">
             <div class="match-header">
                 <span class="match-title">⚔️ CLASH SQUAD 4v4 PRO</span>
@@ -215,7 +204,7 @@
                     <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹50 🪙</strong></div>
                 </div>
                 <div class="room-box" id="roomBox2">🔑 ROOM ID: 9910482 | PASS: 7788</div>
-                <button class="btn-neon" onclick="openSlotModal('CS 4v4 PRO', 50, 8, 3, 'roomBox2')">JOIN & SELECT SLOT (₹50)</button>
+                <button class="btn-neon join-btn" data-title="CS 4v4 PRO" data-fee="50" data-total="8" data-taken="3" data-room="roomBox2">JOIN & SELECT SLOT (₹50)</button>
             </div>
         </div>
     </div>
@@ -225,7 +214,7 @@
         <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif; margin-bottom:12px;">🎁 DAILY FREE REWARD</h3>
         <div class="match-card" style="padding:16px; text-align:center;">
             <p style="font-size:14px; margin-bottom:12px; font-weight:700;">रोज़ाना ₹15 फ्री बोनस क्लेम करें! 🥳</p>
-            <button class="btn-neon" onclick="claimReward()" style="background:linear-gradient(135deg, var(--neon-gold), #b38000); color:#000;">CLAIM ₹15 NOW 🎁</button>
+            <button class="btn-neon" id="btnClaim" style="background:linear-gradient(135deg, var(--neon-gold), #b38000); color:#000;">CLAIM ₹15 NOW 🎁</button>
         </div>
     </div>
 
@@ -235,7 +224,7 @@
         <div class="match-card" style="padding:16px;">
             <div class="form-group">
                 <label>ENTER AMOUNT (₹)</label>
-                <input type="number" id="depAmt" placeholder="Minimum ₹10" oninput="generateQR()">
+                <input type="number" id="depAmt" placeholder="Minimum ₹10">
             </div>
             <div id="qrBox" style="display:none; text-align:center; margin:12px 0;">
                 <img id="qrImg" src="" style="width:160px; background:#fff; padding:6px; border-radius:10px;">
@@ -245,7 +234,7 @@
                 <label>12-DIGIT UTR / TRANSACTION NO.</label>
                 <input type="text" id="utrVal" placeholder="Ex: 402910394812">
             </div>
-            <button class="btn-neon" onclick="submitDeposit()" style="background:linear-gradient(135deg, var(--neon-green), #009933); color:#000;">SUBMIT PAYMENT 🚀</button>
+            <button class="btn-neon" id="btnSubmitDep" style="background:linear-gradient(135deg, var(--neon-green), #009933); color:#000;">SUBMIT PAYMENT 🚀</button>
         </div>
     </div>
 
@@ -261,7 +250,7 @@
                 <label>WITHDRAW AMOUNT (₹)</label>
                 <input type="number" id="wAmt" placeholder="Minimum ₹50">
             </div>
-            <button class="btn-neon" onclick="submitWithdraw()">REQUEST WITHDRAW 💰</button>
+            <button class="btn-neon" id="btnSubmitWd">REQUEST WITHDRAW 💰</button>
         </div>
     </div>
 
@@ -270,8 +259,7 @@
         <div class="match-card" style="padding:16px;">
             <h3 id="pName" style="font-family:'Orbitron',sans-serif;">🎮 PLAYER PRO</h3>
             <p style="font-size:13px; color:var(--neon-cyan); margin-top:4px; font-weight:700;">🆔 GAME UID: <span id="pUid">784910238</span></p>
-            <button class="btn-neon" onclick="editProfile()" style="margin-top:14px; background:#1f2937;">✏️ EDIT PROFILE</button>
-            <a href="https://wa.me/?text=Join%20SG%20Esports!" target="_blank" style="display:block; text-align:center; margin-top:16px; color:var(--neon-green); font-weight:800; text-decoration:none;">💬 WHATSAPP SUPPORT</a>
+            <button class="btn-neon" id="btnEditProf" style="margin-top:14px; background:#1f2937;">✏️ EDIT PROFILE</button>
         </div>
     </div>
 
@@ -280,21 +268,20 @@
         <div class="modal-content">
             <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif;" id="mTitle">SELECT SEAT</h3>
             <div class="seat-grid" id="seatGrid"></div>
-            <button class="btn-neon" onclick="confirmSeat()">CONFIRM SLOT 👍</button>
-            <button class="btn-neon" onclick="closeModal()" style="margin-top:8px; background:#374151;">CANCEL</button>
+            <button class="btn-neon" id="btnConfirmSeat">CONFIRM SLOT 👍</button>
+            <button class="btn-neon" id="btnCloseModal" style="margin-top:8px; background:#374151;">CANCEL</button>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="nav-item active" id="navHome" onclick="switchTab('homeView', 'navHome')"><i class="fa-solid fa-house"></i>Home</div>
-        <div class="nav-item" id="navGiveaway" onclick="switchTab('giveawayView', 'navGiveaway')"><i class="fa-solid fa-gift"></i>Giveaway</div>
-        <div class="nav-item" id="navDeposit" onclick="switchTab('depositView', 'navDeposit')"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
-        <div class="nav-item" id="navWithdraw" onclick="switchTab('withdrawView', 'navWithdraw')"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
-        <div class="nav-item" id="navProfile" onclick="switchTab('profileView', 'navProfile')"><i class="fa-solid fa-user"></i>Profile</div>
+        <div class="nav-item active" data-target="homeView"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-item" data-target="giveawayView"><i class="fa-solid fa-gift"></i>Giveaway</div>
+        <div class="nav-item" data-target="depositView"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
+        <div class="nav-item" data-target="withdrawView"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
+        <div class="nav-item" data-target="profileView"><i class="fa-solid fa-user"></i>Profile</div>
     </div>
 
-    <!-- Direct JavaScript Functions -->
     <script>
         var balance = 100.00;
         var selectedSeat = null;
@@ -302,71 +289,85 @@
         var activeRoomBox = null;
         var upiId = "shishpalji@fam";
 
-        function switchTab(viewId, navId) {
-            var views = document.querySelectorAll('.tab-view');
-            for(var i=0; i<views.length; i++) views[i].classList.remove('active');
-            
-            var navs = document.querySelectorAll('.nav-item');
-            for(var j=0; j<navs.length; j++) navs[j].classList.remove('active');
+        // Tab Switching Logic
+        document.querySelectorAll('.nav-item').forEach(function(item) {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+                
+                this.classList.add('active');
+                var target = this.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
 
+        function switchTabTo(viewId, navIndex) {
+            document.querySelectorAll('.tab-view').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
-            document.getElementById(navId).classList.add('active');
+            document.querySelectorAll('.nav-item')[navIndex].classList.add('active');
         }
 
-        function openDepositTab() {
-            switchTab('depositView', 'navDeposit');
-        }
+        document.getElementById('btnWallet').addEventListener('click', function() {
+            switchTabTo('depositView', 2);
+        });
 
-        function filterCat(cat, btn) {
-            var catBtns = document.querySelectorAll('.cat-btn');
-            for(var i=0; i<catBtns.length; i++) catBtns[i].classList.remove('active');
-            btn.classList.add('active');
+        // Category Filter
+        document.querySelectorAll('.cat-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                var cat = this.getAttribute('data-cat');
+                
+                document.querySelectorAll('.match-item').forEach(function(card) {
+                    if(cat === 'ALL' || card.getAttribute('data-cat') === cat) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
 
-            var cards = document.querySelectorAll('.match-item');
-            for(var j=0; j<cards.length; j++) {
-                if(cat === 'ALL' || cards[j].getAttribute('data-cat') === cat) {
-                    cards[j].style.display = 'block';
-                } else {
-                    cards[j].style.display = 'none';
-                }
-            }
-        }
+        // Slot Modal Open
+        document.querySelectorAll('.join-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                activeFee = parseFloat(this.getAttribute('data-fee'));
+                activeRoomBox = this.getAttribute('data-room');
+                var total = parseInt(this.getAttribute('data-total'));
+                var taken = parseInt(this.getAttribute('data-taken'));
+                selectedSeat = null;
+                
+                document.getElementById('mTitle').innerText = this.getAttribute('data-title');
+                var grid = document.getElementById('seatGrid');
+                grid.innerHTML = '';
 
-        function openSlotModal(title, fee, total, taken, roomBoxId) {
-            activeFee = fee;
-            activeRoomBox = roomBoxId;
-            selectedSeat = null;
-            document.getElementById('mTitle').innerText = title;
-
-            var grid = document.getElementById('seatGrid');
-            grid.innerHTML = '';
-
-            for(var i = 1; i <= total; i++) {
-                (function(seatNum) {
+                for(var i = 1; i <= total; i++) {
                     var div = document.createElement('div');
-                    var isTaken = seatNum <= taken;
+                    var isTaken = i <= taken;
                     div.className = 'seat-box' + (isTaken ? ' taken' : '');
-                    div.innerText = '#' + seatNum;
+                    div.innerText = '#' + i;
 
                     if(!isTaken) {
-                        div.onclick = function() {
-                            var seats = document.querySelectorAll('.seat-box');
-                            for(var k=0; k<seats.length; k++) seats[k].classList.remove('selected');
-                            div.classList.add('selected');
-                            selectedSeat = seatNum;
-                        };
+                        (function(seatNum, seatDiv) {
+                            seatDiv.addEventListener('click', function() {
+                                document.querySelectorAll('.seat-box').forEach(s => s.classList.remove('selected'));
+                                seatDiv.classList.add('selected');
+                                selectedSeat = seatNum;
+                            });
+                        })(i, div);
                     }
                     grid.appendChild(div);
-                })(i);
-            }
-            document.getElementById('seatModal').style.display = 'flex';
-        }
+                }
+                document.getElementById('seatModal').style.display = 'flex';
+            });
+        });
 
-        function closeModal() {
+        document.getElementById('btnCloseModal').addEventListener('click', function() {
             document.getElementById('seatModal').style.display = 'none';
-        }
+        });
 
-        function confirmSeat() {
+        document.getElementById('btnConfirmSeat').addEventListener('click', function() {
             if(!selectedSeat) {
                 alert("कृपया सीट सेलेक्ट करें!");
                 return;
@@ -374,20 +375,21 @@
             if(balance >= activeFee) {
                 balance -= activeFee;
                 document.getElementById('userBalance').innerText = balance.toFixed(2);
-                closeModal();
+                document.getElementById('seatModal').style.display = 'none';
                 if(activeRoomBox) {
                     document.getElementById(activeRoomBox).style.display = 'block';
                 }
                 alert("🎉 सीट #" + selectedSeat + " बुक हो गई है! Room ID और Pass अनलॉक हो गया है।");
             } else {
                 alert("⚠️ बैलेंस कम है, कृपया डिपॉजिट करें!");
-                closeModal();
-                openDepositTab();
+                document.getElementById('seatModal').style.display = 'none';
+                switchTabTo('depositView', 2);
             }
-        }
+        });
 
-        function generateQR() {
-            var amt = document.getElementById('depAmt').value;
+        // QR Generator
+        document.getElementById('depAmt').addEventListener('input', function() {
+            var amt = this.value;
             if(amt && amt >= 10) {
                 var link = "upi://pay?pa=" + upiId + "&pn=SG_Esports&am=" + amt + "&cu=INR";
                 document.getElementById('qrImg').src = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" + encodeURIComponent(link);
@@ -395,9 +397,9 @@
             } else {
                 document.getElementById('qrBox').style.display = 'none';
             }
-        }
+        });
 
-        function submitDeposit() {
+        document.getElementById('btnSubmitDep').addEventListener('click', function() {
             var utr = document.getElementById('utrVal').value;
             if(utr.length < 6) {
                 alert("वैध UTR दर्ज करें!");
@@ -405,18 +407,10 @@
             }
             alert("✅ पेमेंट वेरीफिकेशन के लिए सबमिट हो गया है!");
             document.getElementById('utrVal').value = '';
-            switchTab('homeView', 'navHome');
-        }
+            switchTabTo('homeView', 0);
+        });
 
-        function submitWithdraw() {
+        document.getElementById('btnSubmitWd').addEventListener('click', function() {
             var amt = parseFloat(document.getElementById('wAmt').value);
-            if(amt >= 50 && balance >= amt) {
-                balance -= amt;
-                document.getElementById('userBalance').innerText = balance.toFixed(2);
-                alert("✅ विथड्रॉल रिक्वेस्ट सबमिट हो गई है!");
-            } else {
-                alert("अपर्याप्त बैलेंस या अमान्य अमाउंट!");
-            }
-        }
-
-  
+            if(isNaN(amt) || amt < 50 || balance < amt) {
+                alert("अपर्याप्त बैलेंस या अमान्य अ
