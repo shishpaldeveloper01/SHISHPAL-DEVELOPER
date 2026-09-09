@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF Esports Tournament</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #121212; color: #fff; padding: 15px; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { color: #ff9900; font-size: 22px; }
+        .card { background: #1e1e1e; border-radius: 10px; padding: 15px; margin-bottom: 15px; border-left: 4px solid #ff9900; }
+        .title { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
+        .info { font-size: 14px; color: #ccc; margin-bottom: 5px; }
+        .btn { display: block; width: 100%; padding: 10px; background: #ff9900; border: none; color: #000; font-weight: bold; border-radius: 5px; text-align: center; margin-top: 10px; font-size: 16px; }
+        .wallet-box { background: #2a2a2a; padding: 10px; border-radius: 8px; text-align: center; margin-bottom: 20px; border: 1px solid #444; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🎮 FF TOURNAMENT APP</h1>
+    </div>
+
+    <div class="wallet-box">
+        <h3>💰 Wallet Balance: ₹<span id="balance">0</span></h3>
+    </div>
+
+    <h2 style="font-size: 16px; margin-bottom: 10px; color: #ff9900;">Upcoming Matches</h2>
+
+    <!-- Match Card 1 -->
+    <div class="card">
+        <div class="title">🔥 Solo Battle Royale</div>
+        <div class="info">🕒 Time: 08:00 PM</div>
+        <div class="info">💵 Entry Fee: ₹10</div>
+        <div class="info">🏆 Winning Prize: ₹200</div>
+        <div class="info">🎯 Per Kill: ₹5</div>
+        <button class="btn" onclick="joinMatch(10)">JOIN MATCH</button>
+    </div>
+
+    <!-- Match Card 2 -->
+    <div class="card">
+        <div class="title">⚔️ Squad Custom Match</div>
+        <div class="info">🕒 Time: 09:30 PM</div>
+        <div class="info">💵 Entry Fee: ₹40</div>
+        <div class="info">🏆 Winning Prize: ₹500</div>
+        <div class="info">🎯 Per Kill: ₹10</div>
+        <button class="btn" onclick="joinMatch(40)">JOIN MATCH</button>
+    </div>
+
+    <script>
+        let userBalance = 0;
+
+        function joinMatch(entryFee) {
+            if (userBalance >= entryFee) {
+                userBalance -= entryFee;
+                document.getElementById('balance').innerText = userBalance;
+                alert("मैसेज: आपने सफलतापूर्वक मैच जॉइन कर लिया है!");
+            } else {
+                alert("मैसेज: आपके वॉलेट में पर्याप्त बैलेंस नहीं है। कृपया पहले पैसे ऐड करें।");
+            }
+        }
+    </script>
+</body>
+</html>
