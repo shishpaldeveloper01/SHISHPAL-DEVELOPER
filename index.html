@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SG Esports - Cyberpunk Ultra Pro Hub</title>
+    <title>SG Esports - Pro Hub</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
     
@@ -14,25 +14,25 @@
             --neon-gold: #ffb700;
             --neon-green: #00ff66;
             --bg-dark: #03050a;
-            --glass-bg: rgba(14, 22, 38, 0.65);
-            --glass-border: rgba(0, 240, 255, 0.25);
+            --glass-bg: rgba(14, 22, 38, 0.75);
+            --glass-border: rgba(0, 240, 255, 0.3);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 80px; overflow-x: hidden; }
+        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 80px; overflow-x: hidden; position: relative; }
 
-        /* LIVE ANIMATED CANVAS BACKGROUND */
+        /* LIVE PARTICLES CANVAS - pointer-events: none is critical for clicks */
         #bgCanvas {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            z-index: -1;
-            pointer-events: none;
+            z-index: -1 !important;
+            pointer-events: none !important;
         }
 
-        /* Glassmorphism Top Header */
+        /* Clean Futuristic Header */
         .header {
-            background: rgba(3, 5, 10, 0.85);
+            background: rgba(3, 5, 10, 0.9);
             padding: 12px 16px;
             display: flex;
             justify-content: space-between;
@@ -58,7 +58,7 @@
             100% { box-shadow: 0 0 25px var(--neon-cyan); }
         }
 
-        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; text-shadow: 0 0 10px var(--neon-cyan); }
+        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 900; color: #fff; text-shadow: 0 0 10px var(--neon-cyan); }
         
         .wallet-btn {
             background: rgba(0, 0, 0, 0.6);
@@ -69,25 +69,11 @@
             color: var(--neon-green);
             box-shadow: 0 0 10px rgba(255, 183, 0, 0.3);
             cursor: pointer;
+            z-index: 1001;
         }
-
-        /* Animated Banner Header */
-        .banner-box { padding: 14px 16px 0 16px; }
-        .banner-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--neon-red);
-            border-radius: 14px;
-            padding: 16px;
-            text-align: center;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.25);
-            position: relative;
-            overflow: hidden;
-        }
-        .banner-card h2 { font-family: 'Orbitron', sans-serif; font-size: 16px; color: var(--neon-gold); text-shadow: 0 0 8px var(--neon-gold); }
 
         /* Category Filter Pills */
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px; scrollbar-width: none; }
+        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 16px; scrollbar-width: none; z-index: 10; position: relative; }
         .categories::-webkit-scrollbar { display: none; }
         .cat-btn {
             background: rgba(14, 22, 38, 0.8);
@@ -103,10 +89,10 @@
         }
 
         /* Tab Content Views */
-        .tab-view { display: none; padding: 0 16px 16px 16px; }
+        .tab-view { display: none; padding: 0 16px 16px 16px; position: relative; z-index: 10; }
         .tab-view.active { display: block; }
 
-        /* Match Card - Futuristic Neon Glass UI */
+        /* Match Cards */
         .match-card {
             background: var(--glass-bg);
             border-radius: 16px;
@@ -151,13 +137,14 @@
             font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 13px;
             cursor: pointer; box-shadow: 0 0 15px var(--neon-red);
             text-transform: uppercase; transition: 0.2s;
+            position: relative; z-index: 20;
         }
         .btn-neon:active { transform: scale(0.98); }
 
         /* Modal Popup */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); z-index: 2000;
+            background: rgba(0,0,0,0.85); z-index: 3000;
             justify-content: center; align-items: center; padding: 20px;
             backdrop-filter: blur(8px);
         }
@@ -175,7 +162,7 @@
         .seat-box.selected { background: var(--neon-green); color: #000; font-weight: 900; box-shadow: 0 0 10px var(--neon-green); }
         .seat-box.taken { background: rgba(255, 0, 85, 0.2); color: var(--neon-red); cursor: not-allowed; border-color: var(--neon-red); }
 
-        /* Forms */
+        /* Form Inputs */
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-size: 11px; color: #8a99ad; font-weight: 800; margin-bottom: 4px; }
         .form-group input {
@@ -187,9 +174,9 @@
         /* Bottom Nav */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: rgba(3, 5, 10, 0.9);
+            background: rgba(3, 5, 10, 0.95);
             border-top: 1px solid var(--glass-border);
-            display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000;
+            display: flex; justify-content: space-around; padding: 10px 0; z-index: 2000;
             backdrop-filter: blur(12px);
         }
         .nav-item { color: #8a99ad; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; flex: 1; text-transform: uppercase; }
@@ -199,7 +186,7 @@
 </head>
 <body>
 
-    <!-- LIVE MATRIX/PARTICLE BACKGROUND CANVAS -->
+    <!-- LIVE ANIMATED CANVAS BACKGROUND -->
     <canvas id="bgCanvas"></canvas>
 
     <!-- Header -->
@@ -213,15 +200,7 @@
         </div>
     </div>
 
-    <!-- Banner -->
-    <div class="banner-box">
-        <div class="banner-card">
-            <h2>🔥 ULTRA CYBERPUNK TOURNAMENTS</h2>
-            <p style="font-size:12px; color:#ccc; margin-top:4px;">लाइव स्लॉट चुनकर जॉइन करें और जीतें रियल कैश!</p>
-        </div>
-    </div>
-
-    <!-- Categories -->
+    <!-- Category Selector -->
     <div class="categories">
         <button class="cat-btn active" onclick="filterMatches('ALL', this)">ALL MATCHES</button>
         <button class="cat-btn" onclick="filterMatches('BR', this)">BR SQUAD</button>
@@ -339,9 +318,9 @@
         <div class="nav-item" onclick="switchNav('profileView', 4)"><i class="fa-solid fa-user"></i>Profile</div>
     </div>
 
-    <!-- JAVASCRIPT & LIVE ANIMATION ENGINE -->
+    <!-- JAVASCRIPT ENGINE -->
     <script>
-        // Live Canvas Particle Background Animation Engine
+        // Background Particles
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -370,15 +349,13 @@
             }
             draw() {
                 ctx.fillStyle = this.color;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = this.color;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        for (let i = 0; i < 45; i++) particles.push(new Particle());
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
 
         function animateBg() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -387,7 +364,7 @@
         }
         animateBg();
 
-        // App Core Logic
+        // Core App Logic
         let balance = 100.00;
         let selectedSeat = null;
         let activeFee = 0;
@@ -431,4 +408,21 @@
 
                 if(!isTaken) {
                     div.onclick = function() {
-                      
+                        document.querySelectorAll('.seat-box').forEach(s => s.classList.remove('selected'));
+                        div.classList.add('selected');
+                        selectedSeat = i;
+                    };
+                }
+                grid.appendChild(div);
+            }
+            document.getElementById('seatModal').style.display = 'flex';
+        }
+
+        function confirmSeat() {
+            if(!selectedSeat) return alert("कृपया सीट सेलेक्ट करें!");
+            if(balance >= activeFee) {
+                balance -= activeFee;
+                document.getElementById('userBalance').innerText = balance.toFixed(2);
+                document.getElementById('seatModal').style.display = 'none';
+                if(activeRoomBox) document.getElementById(activeRoomBox).style.display = 'block';
+                alert(
