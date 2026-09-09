@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SG Esports - Official Portal 🎮</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --neon-red: #ff0055;
+            --neon-cyan: #00f0ff;
+            --neon-gold: #ffb700;
+            --neon-green: #00ff66;
+            --neon-purple: #9d00ff;
+            --bg-dark: #0a0e17;
+            --card-bg: #111827;
+            --card-border: rgba(0, 240, 255, 0.25);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 85px; }
+
+        /* Header UI */
+        .header {
+            background: rgba(11, 15, 25, 0.95);
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--neon-cyan);
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+        }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .logo {
+            width: 42px; height: 42px;
+            background: linear-gradient(135deg, var(--neon-red), var(--neon-purple));
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 20px;
+            border: 1.5px solid var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+        }
+        .brand-text { font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 900; color: #fff; letter-spacing: 0.5px; }
+        
+        .wallet-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--neon-gold);
+            padding: 7px 15px;
+            border-radius: 20px;
+            font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 13px;
+            color: var(--neon-green);
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(255, 183, 0, 0.2);
+        }
+
+        /* Categories Bar */
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 14px 16px; scrollbar-width: none; }
+        .categories::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            background: #1f2937;
+            border: 1px solid var(--card-border);
+            color: #9ca3af; padding: 8px 18px;
+            border-radius: 20px; font-weight: 800; font-size: 13px;
+            white-space: nowrap; cursor: pointer; transition: 0.2s;
+        }
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--neon-red), #900030);
+            color: #fff; border-color: var(--neon-red);
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.5);
+        }
+
+        /* Tab Views */
+        .tab-view { display: none; padding: 0 16px; }
+        .tab-view.active { display: block; }
+
+        /* Match Cards */
+        .match-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            margin-bottom: 16px;
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        .match-header {
+            padding: 12px 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .match-title { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 800; color: #fff; }
+        .match-badge { background: var(--neon-red); font-size: 11px; font-weight: 900; padding: 4px 10px; border-radius: 6px; }
+
+        .match-body { padding: 14px; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+            background: rgba(0, 0, 0, 0.35); padding: 12px; border-radius: 10px;
+            text-align: center; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .stat-item span { font-size: 10px; color: #9ca3af; font-weight: 700; display: block; }
+        .stat-item strong { font-size: 15px; font-weight: 800; }
+
+        .room-box {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px dashed var(--neon-cyan);
+            padding: 10px; border-radius: 8px; margin-bottom: 12px;
+            text-align: center; font-family: 'Orbitron', sans-serif;
+            font-size: 13px; font-weight: 800; color: var(--neon-cyan);
+            display: none;
+        }
+
+        .btn-neon {
+            width: 100%;
+            background: linear-gradient(135deg, var(--neon-red), #b3003b);
+            color: #fff; border: none; padding: 12px; border-radius: 10px;
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 13px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(255, 0, 85, 0.3);
+        }
+
+        /* Modal Slot Picker */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 3000;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-content {
+            background: #111827; width: 100%; max-width: 400px;
+            border-radius: 14px; padding: 18px; border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
+        }
+        .seat-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 15px 0; max-height: 200px; overflow-y: auto; }
+        .seat-box {
+            background: #1f2937; border: 1px solid var(--card-border);
+            padding: 8px 0; border-radius: 6px; text-align: center;
+            font-weight: 800; font-size: 12px; cursor: pointer;
+        }
+        .seat-box.selected { background: var(--neon-green); color: #000; font-weight: 900; }
+        .seat-box.taken { background: rgba(255, 0, 85, 0.2); color: var(--neon-red); cursor: not-allowed; }
+
+        /* Forms Inputs */
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 11px; color: #9ca3af; font-weight: 800; margin-bottom: 4px; }
+        .form-group input {
+            width: 100%; background: #000; border: 1px solid var(--card-border);
+            padding: 12px; border-radius: 8px; color: #fff; font-weight: 700; outline: none;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(3, 7, 18, 0.95);
+            border-top: 1px solid var(--card-border);
+            display: flex; justify-content: space-around; padding: 10px 0; z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+        .nav-item { color: #9ca3af; text-align: center; font-size: 10px; font-weight: 800; cursor: pointer; flex: 1; text-transform: uppercase; }
+        .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
+        .nav-item.active { color: var(--neon-cyan); }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <div class="brand">
+            <div class="logo">SG</div>
+            <div class="brand-text">SG ESPORTS 🏆</div>
+        </div>
+        <div class="wallet-btn" id="topWalletBtn">
+            <i class="fa-solid fa-wallet"></i> ₹<span id="userBalance">100.00</span>
+        </div>
+    </div>
+
+    <!-- Category Selector -->
+    <div class="categories">
+        <button class="cat-btn active" id="btnCatAll">🔥 ALL MATCHES</button>
+        <button class="cat-btn" id="btnCatBR">🪂 BR SQUAD</button>
+        <button class="cat-btn" id="btnCatCS">⚔️ CLASH SQUAD</button>
+    </div>
+
+    <!-- 1. HOME TAB -->
+    <div id="homeView" class="tab-view active">
+        <!-- Match 1 -->
+        <div class="match-card match-item" data-cat="BR">
+            <div class="match-header">
+                <span class="match-title">🔥 MEGA BR SQUAD WAR</span>
+                <span class="match-badge">BERMUDA</span>
+            </div>
+            <div class="match-body">
+                <div class="stats-grid">
+                    <div class="stat-item"><span>PRIZE POOL</span><strong style="color:var(--neon-green)">₹1000 🏆</strong></div>
+                    <div class="stat-item"><span>PER KILL</span><strong>₹15 🎯</strong></div>
+                    <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹30 🪙</strong></div>
+                </div>
+                <div class="room-box" id="roomBox1">🔑 ROOM ID: 8849201 | PASS: 1234</div>
+                <button class="btn-neon btn-join" data-title="MEGA BR SQUAD" data-fee="30" data-total="48" data-taken="12" data-room="roomBox1">JOIN & SELECT SLOT (₹30)</button>
+            </div>
+        </div>
+
+        <!-- Match 2 -->
+        <div class="match-card match-item" data-cat="CS">
+            <div class="match-header">
+                <span class="match-title">⚔️ CLASH SQUAD 4v4 PRO</span>
+                <span class="match-badge" style="background:var(--neon-cyan); color:#000;">CS 4v4</span>
+            </div>
+            <div class="match-body">
+                <div class="stats-grid">
+                    <div class="stat-item"><span>WINNER</span><strong style="color:var(--neon-green)">₹400 👑</strong></div>
+                    <div class="stat-item"><span>TYPE</span><strong>4v4 ⚡</strong></div>
+                    <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹50 🪙</strong></div>
+                </div>
+                <div class="room-box" id="roomBox2">🔑 ROOM ID: 9910482 | PASS: 7788</div>
+                <button class="btn-neon btn-join" data-title="CS 4v4 PRO" data-fee="50" data-total="8" data-taken="3" data-room="roomBox2">JOIN & SELECT SLOT (₹50)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. GIVEAWAY TAB -->
+    <div id="giveawayView" class="tab-view">
+        <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif; margin-bottom:12px;">🎁 DAILY FREE REWARD</h3>
+        <div class="match-card" style="padding:16px; text-align:center;">
+            <p style="font-size:14px; margin-bottom:12px; font-weight:700;">रोज़ाना ₹15 फ्री बोनस क्लेम करें! 🥳</p>
+            <button class="btn-neon" id="btnClaim" style="background:linear-gradient(135deg, var(--neon-gold), #b38000); color:#000;">CLAIM ₹15 NOW 🎁</button>
+        </div>
+    </div>
+
+    <!-- 3. DEPOSIT TAB -->
+    <div id="depositView" class="tab-view">
+        <h3 style="color:var(--neon-green); font-family:'Orbitron',sans-serif; margin-bottom:12px;">💳 INSTANT DEPOSIT</h3>
+        <div class="match-card" style="padding:16px;">
+            <div class="form-group">
+                <label>ENTER AMOUNT (₹)</label>
+                <input type="number" id="depAmt" placeholder="Minimum ₹10">
+            </div>
+            <div id="qrBox" style="display:none; text-align:center; margin:12px 0;">
+                <img id="qrImg" src="" style="width:160px; background:#fff; padding:6px; border-radius:10px;">
+                <p style="font-size:12px; color:var(--neon-cyan); font-weight:800; margin-top:6px;">📲 UPI ID: shishpalji@fam</p>
+            </div>
+            <div class="form-group">
+                <label>12-DIGIT UTR / TRANSACTION NO.</label>
+                <input type="text" id="utrVal" placeholder="Ex: 402910394812">
+            </div>
+            <button class="btn-neon" id="btnSubmitDep" style="background:linear-gradient(135deg, var(--neon-green), #009933); color:#000;">SUBMIT PAYMENT 🚀</button>
+        </div>
+    </div>
+
+    <!-- 4. WITHDRAW TAB -->
+    <div id="withdrawView" class="tab-view">
+        <h3 style="color:var(--neon-red); font-family:'Orbitron',sans-serif; margin-bottom:12px;">💸 WITHDRAW WINNINGS</h3>
+        <div class="match-card" style="padding:16px;">
+            <div class="form-group">
+                <label>YOUR UPI ID / PHONE NUMBER</label>
+                <input type="text" id="wUpi" placeholder="shishpalji@fam">
+            </div>
+            <div class="form-group">
+                <label>WITHDRAW AMOUNT (₹)</label>
+                <input type="number" id="wAmt" placeholder="Minimum ₹50">
+            </div>
+            <button class="btn-neon" id="btnSubmitWith">REQUEST WITHDRAW 💰</button>
+        </div>
+    </div>
+
+    <!-- 5. PROFILE TAB -->
+    <div id="profileView" class="tab-view">
+        <div class="match-card" style="padding:16px;">
+            <h3 id="pName" style="font-family:'Orbitron',sans-serif;">🎮 PLAYER PRO</h3>
+            <p style="font-size:13px; color:var(--neon-cyan); margin-top:4px; font-weight:700;">🆔 GAME UID: <span id="pUid">784910238</span></p>
+            <button class="btn-neon" id="btnEditProfile" style="margin-top:14px; background:#1f2937;">✏️ EDIT PROFILE</button>
+            <a href="https://wa.me/?text=Join%20SG%20Esports!" target="_blank" style="display:block; text-align:center; margin-top:16px; color:var(--neon-green); font-weight:800; text-decoration:none;">💬 WHATSAPP SUPPORT</a>
+        </div>
+    </div>
+
+    <!-- Modal Slot Grid -->
+    <div class="modal" id="seatModal">
+        <div class="modal-content">
+            <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif;" id="mTitle">SELECT SEAT</h3>
+            <div class="seat-grid" id="seatGrid"></div>
+            <button class="btn-neon" id="btnConfirmSeat">CONFIRM SLOT 👍</button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" id="navHome"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-item" id="navGiveaway"><i class="fa-solid fa-gift"></i>Giveaway</div>
+        <div class="nav-item" id="navDeposit"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
+        <div class="nav-item" id="navWithdraw"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
+        <div class="nav-item" id="navProfile"><i class="fa-solid fa-user"></i>Profile</div>
+    </div>
+
+    <!-- Super Fast JavaScript -->
+    <script>
+        let balance = 100.00;
+        let selectedSeat = null;
+        let activeFee = 0;
+        let activeRoomBox = null;
+        const upiId = "shishpalji@fam";
+
+        function switchTab(viewId, navBtn) {
+            document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            navBtn.classList.add('active');
+        }
+
+        document.getElementById('navHome').onclick = function() { switchTab('homeView', this); };
+        document.getElementById('navGiveaway').onclick = function() { switchTab('giveawayView', this); };
+        document.getElementById('navDeposit').onclick = function() { switchTab('depositView', this); };
+        document.getElementById('navWithdraw').onclick = function() { switchTab('withdrawView', this); };
+        document.getElementById('navProfile').onclick = function() { switchTab('profileView', this); };
+        document.getElementById('topWalletBtn').onclick = function() { switchTab('depositView', document.getElementById('navDeposit')); };
+
+        document.getElementById('btnCatAll').onclick = function() { filterCat('ALL', this); };
+        document.getElementById('btnCatBR').onclick = function() { filterCat('BR', this); };
+        document.getElementById('btnCatCS').onclick = function() { filterCat('CS', this); };
+
+        function filterCat(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.match-item').forEach(card => {
+                if(cat === 'ALL' || card.getAttribute('data-cat') === cat) card.style.display = 'block';
+                else card.style.display = 'none';
+            });
+        }
+
+        document.querySelectorAll('.btn-join').forEach(btn => {
+            btn.onclick = function() {
+                let title = this.getAttribute('data-title');
+                activeFee = parseFloat(this.getAttribute('data-fee'));
+                let total = parseInt(this.getAttribute('data-total'));
+                let taken = parseInt(this.getAttribute('data-taken'));
+                activeRoomBox = this.getAttribute('data-room');
+                selectedSeat = null;
+
+                document.getElementById('mTitle').innerText = title;
+                let grid = document.getElementById('seatGrid');
+                grid.innerHTML = '';
+
+                for(let i = 1; i <= total; i++) {
+                    let div = document.createElement('div');
+                    let isTaken = i <= taken;
+                    div.className = `seat-box ${isTaken ? 'taken' : ''}`;
+                    div.innerText = `#${i}`;
+
+                    if(!isTaken) {
+                        div.onclick = function() {
+                            document.querySelectorAll('.seat-box').forEach(s => s.classList.remove('selected'));
+                            div.classList.add('selected');
+                            selectedSeat = i;
+                        };
+                    }
+                    grid.appendChild(div);
+                }
+                document.getElementById('seatModal').style.display = 'flex';
+            };
+        });
+
+        document.getElementById('btnConfirmSeat').onclick = function() {
+            if(!selectedSeat) return alert("कृपया सीट सेलेक्ट करें!");
+            if(balance >= activeFee) {
+                balance -= activeFee;
+                document.getElementById('userBalance').innerText = balance.toFixed(2);
+                document.getElementById('seatModal').style.display = 'none';
+                if(activeRoomBox) document.getElementById(activeRoomBox).style.display = 'block';
+                alert(`🎉 सीट #${selectedSeat} बुक हो गई है! Room ID और Pass अनलॉक हो गया है।`);
+            } else {
+                alert("⚠️ बैलेंस कम है, कृपया डिपॉजिट करें!");
+                document.getElementById('seatModal').style.display = 'none';
+                switchTab('depositView', document.getElementById('navDeposit'));
+            }
+        };
+
+        document.getElementById('depAmt').oninput = function() {
+            let amt = this.value;
+            if(amt && amt >= 10) {
+                let link = `upi://pay?pa=${upiId}&pn=SG_Esports&am=${amt}&cu=INR`;
+                document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(link)}`;
+                document.getElementById('qrBox').style.display = 'block';
+            } else {
+                document.getElementById('qrBox').style.display = 'none';
+            }
+        };
+
+        document.getElementById('btnSubmitDep').onclick = function() {
+            let utr = document.getElementById('utrVal').value;
+            if(utr.length < 6) return alert("वैध UTR दर्ज करें!");
+            alert("✅ पेमेंट वेरीफिकेशन के लिए सबमिट हो गया है!");
+            document.getElementById('utrVal').value = '';
+            switchTab('homeView', document.getElementById('navHome'));
+        };
+
+        document.getElementById('btnSubmitWith').onclick = function() {
+            let amt = parseFloat(document.getElementById('wAmt').value);
+            if(amt >= 50 && balance >= amt) {
+                balance -= amt;
+     
