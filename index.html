@@ -20,7 +20,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 85px; }
+        body { background-color: var(--bg-dark); color: #fff; padding-bottom: 85px; user-select: none; }
 
         /* Header UI */
         .header {
@@ -137,10 +137,10 @@
         .seat-box {
             background: #1f2937; border: 1px solid var(--card-border);
             padding: 8px 0; border-radius: 6px; text-align: center;
-            font-weight: 800; font-size: 12px; cursor: pointer;
+            font-weight: 800; font-size: 12px; cursor: pointer; color: #fff;
         }
-        .seat-box.selected { background: var(--neon-green); color: #000; font-weight: 900; }
-        .seat-box.taken { background: rgba(255, 0, 85, 0.2); color: var(--neon-red); cursor: not-allowed; }
+        .seat-box.selected { background: var(--neon-green) !important; color: #000 !important; font-weight: 900; }
+        .seat-box.taken { background: rgba(255, 0, 85, 0.2) !important; color: var(--neon-red) !important; cursor: not-allowed; }
 
         /* Forms Inputs */
         .form-group { margin-bottom: 12px; }
@@ -171,16 +171,16 @@
             <div class="logo">SG</div>
             <div class="brand-text">SG ESPORTS 🏆</div>
         </div>
-        <div class="wallet-btn" id="topWalletBtn">
+        <div class="wallet-btn" onclick="openDepositTab()">
             <i class="fa-solid fa-wallet"></i> ₹<span id="userBalance">100.00</span>
         </div>
     </div>
 
     <!-- Category Selector -->
     <div class="categories">
-        <button class="cat-btn active" id="btnCatAll">🔥 ALL MATCHES</button>
-        <button class="cat-btn" id="btnCatBR">🪂 BR SQUAD</button>
-        <button class="cat-btn" id="btnCatCS">⚔️ CLASH SQUAD</button>
+        <button class="cat-btn active" onclick="filterCat('ALL', this)">🔥 ALL MATCHES</button>
+        <button class="cat-btn" onclick="filterCat('BR', this)">🪂 BR SQUAD</button>
+        <button class="cat-btn" onclick="filterCat('CS', this)">⚔️ CLASH SQUAD</button>
     </div>
 
     <!-- 1. HOME TAB -->
@@ -198,7 +198,7 @@
                     <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹30 🪙</strong></div>
                 </div>
                 <div class="room-box" id="roomBox1">🔑 ROOM ID: 8849201 | PASS: 1234</div>
-                <button class="btn-neon btn-join" data-title="MEGA BR SQUAD" data-fee="30" data-total="48" data-taken="12" data-room="roomBox1">JOIN & SELECT SLOT (₹30)</button>
+                <button class="btn-neon" onclick="openSlotModal('MEGA BR SQUAD', 30, 48, 12, 'roomBox1')">JOIN & SELECT SLOT (₹30)</button>
             </div>
         </div>
 
@@ -215,7 +215,7 @@
                     <div class="stat-item"><span>ENTRY</span><strong style="color:var(--neon-gold)">₹50 🪙</strong></div>
                 </div>
                 <div class="room-box" id="roomBox2">🔑 ROOM ID: 9910482 | PASS: 7788</div>
-                <button class="btn-neon btn-join" data-title="CS 4v4 PRO" data-fee="50" data-total="8" data-taken="3" data-room="roomBox2">JOIN & SELECT SLOT (₹50)</button>
+                <button class="btn-neon" onclick="openSlotModal('CS 4v4 PRO', 50, 8, 3, 'roomBox2')">JOIN & SELECT SLOT (₹50)</button>
             </div>
         </div>
     </div>
@@ -225,7 +225,7 @@
         <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif; margin-bottom:12px;">🎁 DAILY FREE REWARD</h3>
         <div class="match-card" style="padding:16px; text-align:center;">
             <p style="font-size:14px; margin-bottom:12px; font-weight:700;">रोज़ाना ₹15 फ्री बोनस क्लेम करें! 🥳</p>
-            <button class="btn-neon" id="btnClaim" style="background:linear-gradient(135deg, var(--neon-gold), #b38000); color:#000;">CLAIM ₹15 NOW 🎁</button>
+            <button class="btn-neon" onclick="claimReward()" style="background:linear-gradient(135deg, var(--neon-gold), #b38000); color:#000;">CLAIM ₹15 NOW 🎁</button>
         </div>
     </div>
 
@@ -235,7 +235,7 @@
         <div class="match-card" style="padding:16px;">
             <div class="form-group">
                 <label>ENTER AMOUNT (₹)</label>
-                <input type="number" id="depAmt" placeholder="Minimum ₹10">
+                <input type="number" id="depAmt" placeholder="Minimum ₹10" oninput="generateQR()">
             </div>
             <div id="qrBox" style="display:none; text-align:center; margin:12px 0;">
                 <img id="qrImg" src="" style="width:160px; background:#fff; padding:6px; border-radius:10px;">
@@ -245,7 +245,7 @@
                 <label>12-DIGIT UTR / TRANSACTION NO.</label>
                 <input type="text" id="utrVal" placeholder="Ex: 402910394812">
             </div>
-            <button class="btn-neon" id="btnSubmitDep" style="background:linear-gradient(135deg, var(--neon-green), #009933); color:#000;">SUBMIT PAYMENT 🚀</button>
+            <button class="btn-neon" onclick="submitDeposit()" style="background:linear-gradient(135deg, var(--neon-green), #009933); color:#000;">SUBMIT PAYMENT 🚀</button>
         </div>
     </div>
 
@@ -261,7 +261,7 @@
                 <label>WITHDRAW AMOUNT (₹)</label>
                 <input type="number" id="wAmt" placeholder="Minimum ₹50">
             </div>
-            <button class="btn-neon" id="btnSubmitWith">REQUEST WITHDRAW 💰</button>
+            <button class="btn-neon" onclick="submitWithdraw()">REQUEST WITHDRAW 💰</button>
         </div>
     </div>
 
@@ -270,132 +270,153 @@
         <div class="match-card" style="padding:16px;">
             <h3 id="pName" style="font-family:'Orbitron',sans-serif;">🎮 PLAYER PRO</h3>
             <p style="font-size:13px; color:var(--neon-cyan); margin-top:4px; font-weight:700;">🆔 GAME UID: <span id="pUid">784910238</span></p>
-            <button class="btn-neon" id="btnEditProfile" style="margin-top:14px; background:#1f2937;">✏️ EDIT PROFILE</button>
+            <button class="btn-neon" onclick="editProfile()" style="margin-top:14px; background:#1f2937;">✏️ EDIT PROFILE</button>
             <a href="https://wa.me/?text=Join%20SG%20Esports!" target="_blank" style="display:block; text-align:center; margin-top:16px; color:var(--neon-green); font-weight:800; text-decoration:none;">💬 WHATSAPP SUPPORT</a>
         </div>
     </div>
 
-    <!-- Modal Slot Grid -->
+    <!-- Modal Slot Picker -->
     <div class="modal" id="seatModal">
         <div class="modal-content">
             <h3 style="color:var(--neon-gold); font-family:'Orbitron',sans-serif;" id="mTitle">SELECT SEAT</h3>
             <div class="seat-grid" id="seatGrid"></div>
-            <button class="btn-neon" id="btnConfirmSeat">CONFIRM SLOT 👍</button>
+            <button class="btn-neon" onclick="confirmSeat()">CONFIRM SLOT 👍</button>
+            <button class="btn-neon" onclick="closeModal()" style="margin-top:8px; background:#374151;">CANCEL</button>
         </div>
     </div>
 
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
-        <div class="nav-item active" id="navHome"><i class="fa-solid fa-house"></i>Home</div>
-        <div class="nav-item" id="navGiveaway"><i class="fa-solid fa-gift"></i>Giveaway</div>
-        <div class="nav-item" id="navDeposit"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
-        <div class="nav-item" id="navWithdraw"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
-        <div class="nav-item" id="navProfile"><i class="fa-solid fa-user"></i>Profile</div>
+        <div class="nav-item active" id="navHome" onclick="switchTab('homeView', 'navHome')"><i class="fa-solid fa-house"></i>Home</div>
+        <div class="nav-item" id="navGiveaway" onclick="switchTab('giveawayView', 'navGiveaway')"><i class="fa-solid fa-gift"></i>Giveaway</div>
+        <div class="nav-item" id="navDeposit" onclick="switchTab('depositView', 'navDeposit')"><i class="fa-solid fa-plus-circle"></i>Deposit</div>
+        <div class="nav-item" id="navWithdraw" onclick="switchTab('withdrawView', 'navWithdraw')"><i class="fa-solid fa-arrow-up-right-from-square"></i>Withdraw</div>
+        <div class="nav-item" id="navProfile" onclick="switchTab('profileView', 'navProfile')"><i class="fa-solid fa-user"></i>Profile</div>
     </div>
 
-    <!-- Super Fast JavaScript -->
+    <!-- Direct JavaScript Functions -->
     <script>
-        let balance = 100.00;
-        let selectedSeat = null;
-        let activeFee = 0;
-        let activeRoomBox = null;
-        const upiId = "shishpalji@fam";
+        var balance = 100.00;
+        var selectedSeat = null;
+        var activeFee = 0;
+        var activeRoomBox = null;
+        var upiId = "shishpalji@fam";
 
-        function switchTab(viewId, navBtn) {
-            document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        function switchTab(viewId, navId) {
+            var views = document.querySelectorAll('.tab-view');
+            for(var i=0; i<views.length; i++) views[i].classList.remove('active');
+            
+            var navs = document.querySelectorAll('.nav-item');
+            for(var j=0; j<navs.length; j++) navs[j].classList.remove('active');
+
             document.getElementById(viewId).classList.add('active');
-            navBtn.classList.add('active');
+            document.getElementById(navId).classList.add('active');
         }
 
-        document.getElementById('navHome').onclick = function() { switchTab('homeView', this); };
-        document.getElementById('navGiveaway').onclick = function() { switchTab('giveawayView', this); };
-        document.getElementById('navDeposit').onclick = function() { switchTab('depositView', this); };
-        document.getElementById('navWithdraw').onclick = function() { switchTab('withdrawView', this); };
-        document.getElementById('navProfile').onclick = function() { switchTab('profileView', this); };
-        document.getElementById('topWalletBtn').onclick = function() { switchTab('depositView', document.getElementById('navDeposit')); };
-
-        document.getElementById('btnCatAll').onclick = function() { filterCat('ALL', this); };
-        document.getElementById('btnCatBR').onclick = function() { filterCat('BR', this); };
-        document.getElementById('btnCatCS').onclick = function() { filterCat('CS', this); };
+        function openDepositTab() {
+            switchTab('depositView', 'navDeposit');
+        }
 
         function filterCat(cat, btn) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            var catBtns = document.querySelectorAll('.cat-btn');
+            for(var i=0; i<catBtns.length; i++) catBtns[i].classList.remove('active');
             btn.classList.add('active');
-            document.querySelectorAll('.match-item').forEach(card => {
-                if(cat === 'ALL' || card.getAttribute('data-cat') === cat) card.style.display = 'block';
-                else card.style.display = 'none';
-            });
+
+            var cards = document.querySelectorAll('.match-item');
+            for(var j=0; j<cards.length; j++) {
+                if(cat === 'ALL' || cards[j].getAttribute('data-cat') === cat) {
+                    cards[j].style.display = 'block';
+                } else {
+                    cards[j].style.display = 'none';
+                }
+            }
         }
 
-        document.querySelectorAll('.btn-join').forEach(btn => {
-            btn.onclick = function() {
-                let title = this.getAttribute('data-title');
-                activeFee = parseFloat(this.getAttribute('data-fee'));
-                let total = parseInt(this.getAttribute('data-total'));
-                let taken = parseInt(this.getAttribute('data-taken'));
-                activeRoomBox = this.getAttribute('data-room');
-                selectedSeat = null;
+        function openSlotModal(title, fee, total, taken, roomBoxId) {
+            activeFee = fee;
+            activeRoomBox = roomBoxId;
+            selectedSeat = null;
+            document.getElementById('mTitle').innerText = title;
 
-                document.getElementById('mTitle').innerText = title;
-                let grid = document.getElementById('seatGrid');
-                grid.innerHTML = '';
+            var grid = document.getElementById('seatGrid');
+            grid.innerHTML = '';
 
-                for(let i = 1; i <= total; i++) {
-                    let div = document.createElement('div');
-                    let isTaken = i <= taken;
-                    div.className = `seat-box ${isTaken ? 'taken' : ''}`;
-                    div.innerText = `#${i}`;
+            for(var i = 1; i <= total; i++) {
+                (function(seatNum) {
+                    var div = document.createElement('div');
+                    var isTaken = seatNum <= taken;
+                    div.className = 'seat-box' + (isTaken ? ' taken' : '');
+                    div.innerText = '#' + seatNum;
 
                     if(!isTaken) {
                         div.onclick = function() {
-                            document.querySelectorAll('.seat-box').forEach(s => s.classList.remove('selected'));
+                            var seats = document.querySelectorAll('.seat-box');
+                            for(var k=0; k<seats.length; k++) seats[k].classList.remove('selected');
                             div.classList.add('selected');
-                            selectedSeat = i;
+                            selectedSeat = seatNum;
                         };
                     }
                     grid.appendChild(div);
-                }
-                document.getElementById('seatModal').style.display = 'flex';
-            };
-        });
+                })(i);
+            }
+            document.getElementById('seatModal').style.display = 'flex';
+        }
 
-        document.getElementById('btnConfirmSeat').onclick = function() {
-            if(!selectedSeat) return alert("कृपया सीट सेलेक्ट करें!");
+        function closeModal() {
+            document.getElementById('seatModal').style.display = 'none';
+        }
+
+        function confirmSeat() {
+            if(!selectedSeat) {
+                alert("कृपया सीट सेलेक्ट करें!");
+                return;
+            }
             if(balance >= activeFee) {
                 balance -= activeFee;
                 document.getElementById('userBalance').innerText = balance.toFixed(2);
-                document.getElementById('seatModal').style.display = 'none';
-                if(activeRoomBox) document.getElementById(activeRoomBox).style.display = 'block';
-                alert(`🎉 सीट #${selectedSeat} बुक हो गई है! Room ID और Pass अनलॉक हो गया है।`);
+                closeModal();
+                if(activeRoomBox) {
+                    document.getElementById(activeRoomBox).style.display = 'block';
+                }
+                alert("🎉 सीट #" + selectedSeat + " बुक हो गई है! Room ID और Pass अनलॉक हो गया है।");
             } else {
                 alert("⚠️ बैलेंस कम है, कृपया डिपॉजिट करें!");
-                document.getElementById('seatModal').style.display = 'none';
-                switchTab('depositView', document.getElementById('navDeposit'));
+                closeModal();
+                openDepositTab();
             }
-        };
+        }
 
-        document.getElementById('depAmt').oninput = function() {
-            let amt = this.value;
+        function generateQR() {
+            var amt = document.getElementById('depAmt').value;
             if(amt && amt >= 10) {
-                let link = `upi://pay?pa=${upiId}&pn=SG_Esports&am=${amt}&cu=INR`;
-                document.getElementById('qrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(link)}`;
+                var link = "upi://pay?pa=" + upiId + "&pn=SG_Esports&am=" + amt + "&cu=INR";
+                document.getElementById('qrImg').src = "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" + encodeURIComponent(link);
                 document.getElementById('qrBox').style.display = 'block';
             } else {
                 document.getElementById('qrBox').style.display = 'none';
             }
-        };
+        }
 
-        document.getElementById('btnSubmitDep').onclick = function() {
-            let utr = document.getElementById('utrVal').value;
-            if(utr.length < 6) return alert("वैध UTR दर्ज करें!");
+        function submitDeposit() {
+            var utr = document.getElementById('utrVal').value;
+            if(utr.length < 6) {
+                alert("वैध UTR दर्ज करें!");
+                return;
+            }
             alert("✅ पेमेंट वेरीफिकेशन के लिए सबमिट हो गया है!");
             document.getElementById('utrVal').value = '';
-            switchTab('homeView', document.getElementById('navHome'));
-        };
+            switchTab('homeView', 'navHome');
+        }
 
-        document.getElementById('btnSubmitWith').onclick = function() {
-            let amt = parseFloat(document.getElementById('wAmt').value);
+        function submitWithdraw() {
+            var amt = parseFloat(document.getElementById('wAmt').value);
             if(amt >= 50 && balance >= amt) {
                 balance -= amt;
-     
+                document.getElementById('userBalance').innerText = balance.toFixed(2);
+                alert("✅ विथड्रॉल रिक्वेस्ट सबमिट हो गई है!");
+            } else {
+                alert("अपर्याप्त बैलेंस या अमान्य अमाउंट!");
+            }
+        }
+
+  
