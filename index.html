@@ -62,6 +62,12 @@
 
         .btn-action { width: 100%; background: linear-gradient(45deg, var(--primary), #b3002a); color: #fff; border: none; padding: 12px; border-radius: 10px; font-weight: 900; font-size: 14px; text-transform: uppercase; cursor: pointer; box-shadow: 0 4px 15px rgba(255,0,60,0.4); }
 
+        /* Gateway Apps Grid */
+        .gateway-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+        .gateway-item { background: #070b12; border: 1px solid var(--border-color); padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .gateway-item:hover { border-color: var(--accent); background: #101726; }
+        .gateway-item i { font-size: 20px; margin-bottom: 4px; display: block; }
+
         /* Giveaway Cards */
         .giveaway-card { background: linear-gradient(135deg, #181200, #0d131f); border: 1px solid var(--secondary); border-radius: 16px; padding: 18px; margin-bottom: 15px; }
         .giveaway-title { font-size: 18px; font-weight: 900; color: var(--secondary); margin-bottom: 8px; }
@@ -199,30 +205,48 @@
         </div>
     </div>
 
-    <!-- 3. DEPOSIT TAB VIEW -->
+    <!-- 3. DEPOSIT TAB VIEW (UPI INTEGRATED) -->
     <div id="depositTab" class="tab-view">
-        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--success);"><i class="fa-solid fa-plus-circle"></i> ADD MONEY TO WALLET</h2>
+        <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--success);"><i class="fa-solid fa-plus-circle"></i> ADD MONEY (INSTANT GATEWAY)</h2>
         <div class="profile-card">
             <div class="form-group">
                 <label>Deposit Amount (₹)</label>
                 <input type="number" id="depAmt" placeholder="Enter Amount (e.g. 50, 100)" oninput="renderQR()">
             </div>
             
+            <p style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">SELECT PAYMENT GATEWAY / APP:</p>
+            <div class="gateway-grid">
+                <div class="gateway-item" onclick="payViaGateway('PhonePe')">
+                    <i class="fa-solid fa-mobile-screen-button" style="color:#673ab7;"></i>
+                    <span style="font-size:10px; font-weight:800;">PHONEPE</span>
+                </div>
+                <div class="gateway-item" onclick="payViaGateway('Paytm')">
+                    <i class="fa-solid fa-wallet" style="color:#00baf2;"></i>
+                    <span style="font-size:10px; font-weight:800;">PAYTM</span>
+                </div>
+                <div class="gateway-item" onclick="payViaGateway('GPay')">
+                    <i class="fa-brands fa-google-pay" style="color:#ea4335;"></i>
+                    <span style="font-size:10px; font-weight:800;">G-PAY</span>
+                </div>
+            </div>
+
+            <!-- Dynamic QR Code Area -->
             <div id="qrArea" style="display:none; text-align: center; margin: 15px 0;">
                 <div style="background:#fff; padding:10px; border-radius:12px; display:inline-block;">
                     <img id="qrImg" src="" style="width:160px; height:160px; display:block;">
                 </div>
-                <p style="font-size: 11px; color: var(--accent); margin-top: 6px;">Scan & Pay via UPI App</p>
+                <p style="font-size: 12px; color: var(--accent); font-weight: 800; margin-top: 6px;">UPI ID: shishpalji@fam</p>
+                <p style="font-size: 10px; color: var(--text-muted);">क्यूआर कोड को स्कैन करें या डायरेक्ट पेमेंट करें</p>
             </div>
 
-            <button class="btn-action" style="background: linear-gradient(45deg, #00c6ff, #0072ff);" onclick="payDirectUPI()">PAY VIA INSTANT UPI</button>
+            <button class="btn-action" style="background: linear-gradient(45deg, #00c6ff, #0072ff);" onclick="payDirectUPI()">PAY VIA ANY UPI APP</button>
             <hr style="border-color: var(--border-color); margin: 15px 0;">
             
             <div class="form-group">
-                <label>Enter 12-Digit UTR / Ref Number</label>
-                <input type="text" id="utrVal" placeholder="Enter 12 Digit UTR Number">
+                <label>Enter 12-Digit UTR / Transaction Ref No.</label>
+                <input type="text" id="utrVal" placeholder="Ex: 402819238491">
             </div>
-            <button class="btn-action" onclick="submitUTR()">SUBMIT UTR FOR VERIFICATION</button>
+            <button class="btn-action" onclick="submitUTR()">SUBMIT UTR FOR INSTANT APPROVAL</button>
         </div>
     </div>
 
@@ -231,8 +255,8 @@
         <h2 style="font-size: 18px; font-weight: 900; margin-bottom: 15px; color: var(--primary);"><i class="fa-solid fa-arrow-up-right-from-square"></i> WITHDRAW WINNINGS</h2>
         <div class="profile-card">
             <div class="form-group">
-                <label>Your Payment UPI / Phone Pay Number</label>
-                <input type="text" id="wUpi" placeholder="e.g. 9876543210@paytm or UPI ID">
+                <label>Your UPI ID / PhonePay Number</label>
+                <input type="text" id="wUpi" placeholder="e.g. 9876543210@fam or shishpalji@fam">
             </div>
             <div class="form-group">
                 <label>Withdraw Amount (₹)</label>
@@ -255,25 +279,4 @@
 
             <div class="profile-btn-grid">
                 <button class="btn-sec" onclick="editProfile()"><i class="fa-solid fa-user-pen"></i> Edit Profile</button>
-                <button class="btn-sec" onclick="switchTab('withdrawTab')"><i class="fa-solid fa-wallet"></i> Withdraw</button>
-            </div>
-
-            <!-- Admin Dynamic Support Config Box -->
-            <div class="support-box">
-                <h4 style="font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 10px;"><i class="fa-solid fa-headset"></i> CUSTOMER SUPPORT</h4>
-                <div class="support-item">
-                    <span style="font-size: 12px; font-weight: 700;"><i class="fa-brands fa-whatsapp" style="color:var(--success);"></i> WhatsApp Admin</span>
-                    <a id="spWhatsappLink" href="https://wa.me/919999999999" target="_blank" style="color: var(--success); text-decoration: none; font-weight: 800; font-size: 12px;">Chat Now</a>
-                </div>
-                <div class="support-item">
-                    <span style="font-size: 12px; font-weight: 700;"><i class="fa-solid fa-envelope" style="color:var(--secondary);"></i> Official Email</span>
-                    <span id="spEmailText" style="color: var(--text-muted); font-size: 12px; font-weight: 700;">support@sgesports.com</span>
-                </div>
-            </div>
-
-            <!-- Wallet History -->
-            <div style="margin-top: 20px;">
-                <h4 style="font-size: 13px; font-weight: 800; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase;">TRANSACTION HISTORY</h4>
-                <div class="history-list" id="historyList">
-                    <div class="history-item"><span>➕ Deposit Added</span><strong style="color:var(--success);">+ ₹50.00</strong></div>
-                    <div class="history-item withdraw"><span>➖ Match Joined</span><strong style="color:var(--primary);">- ₹30.00</strong>
+                <button class="btn-sec" onclick="switchTab('withdrawTab')"><i class="fa-solid fa-wallet">
